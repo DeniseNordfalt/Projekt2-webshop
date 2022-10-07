@@ -11,6 +11,6 @@ export interface UserItem {
   email: string;
   password: string;
   phoneNumber?: number;
-  role: "customer" | "admin";
+  roles: ("customer" | "admin")[];
   deliveryAddress?: Adress;
 }
