@@ -1,22 +1,7 @@
 import { NextFunction } from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs'
-
-type Adress = {
-  streetName: string;
-  streetNumber: number;
-  county: string;
-  postalCode: number;
-};
-
-interface UserItem {
-  name: string;
-  email: string;
-  password: string;
-  phoneNumber?: number;
-  role: "customer" | "admin";
-  deliveryAddress?: Adress;
-}
+import {UserItem} from '@project-webbshop/shared'
 
 const userSchema = new mongoose.Schema({
   namme: { type: String, required: true },
@@ -32,9 +17,7 @@ const userSchema = new mongoose.Schema({
    },
 });
 
-const User = mongoose.model<UserItem>("User", userSchema);
-
-userSchema.pre("save", async function (next: NextFunction): Promise<void> {
+userSchema.pre(/save/, async function (next): Promise<void> {
     if (this.modifiedPaths().includes('password')) {
         const hash = await bcrypt.hash(this.password, 10);
         this.password = hash;
@@ -42,3 +25,4 @@ userSchema.pre("save", async function (next: NextFunction): Promise<void> {
     next()
 })
 
+const User = mongoose.model<UserItem>("User", userSchema);
