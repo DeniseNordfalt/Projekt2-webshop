@@ -20,7 +20,7 @@ app.listen(port, async function () {
     await setupMongoDb(mongoUrl);
     console.log("connection to database successful");
   } catch (err) {
-    console.log("couldn not connect to database");
+    console.log("could not connect to database");
   }
   console.log(`App is listening on port ${port}!`);
 });
