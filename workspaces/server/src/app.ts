@@ -2,12 +2,12 @@ import express, { Application, json, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import indexRouter from "./routes/index";
-import { setupMongoDb } from "./models/common";
+import { setupMongoDb } from "./config/common";
 
 dotenv.config();
 
 const app: Application = express();
-const port: number = parseInt(process.env.SERVER_PORT || "");
+const port: number = parseInt(process.env.SERVER_PORT || "3001");
 const mongoUrl: string = process.env.MONGODB_URL || "";
 
 app.use(cors());
