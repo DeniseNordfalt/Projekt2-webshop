@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 import {UserItem} from '@project-webbshop/shared'
 
 const userSchema = new mongoose.Schema({
-  namme: { type: String, required: true },
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true },
   phoneNumber: { type: String, required: false },
@@ -33,3 +33,8 @@ userSchema.statics.login = async function (username: string, password: string): 
 };
 
 const User = mongoose.model<UserItem>("User", userSchema);
+
+export const handleNewUser = async (user: UserItem): Promise<UserItem> => {
+  const newUser = await User.create(user);
+  return newUser;
+}
