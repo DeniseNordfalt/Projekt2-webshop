@@ -81,20 +81,3 @@ export const UserMenuItem = styled.a`
     color: #007bff;
   }
 `;
-
-export const UserMenuLogout = styled.a`
-  display: block;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #000;
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
-
-  &:hover {
-    color: #dc3545;
-  }
-
-  &.active {
-    color: #dc3545;
-  }
-`;
