@@ -1,5 +1,6 @@
 import { ProductItem } from "@project-webbshop/shared";
 import React from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -36,8 +37,11 @@ type Props = {
 };
 
 const ProductCard = ({ data }: Props) => {
+  const navigate = useNavigate();
+
   return (
-    <Container>
+    <Container onClick={() => {
+      navigate(`/${data._id}`)}} key={data._id}>
       <Thumbnail src={data.images[0]} />
       <TextWrapper>
         <h3 style={{margin: "10px"}}>{data.name}</h3>

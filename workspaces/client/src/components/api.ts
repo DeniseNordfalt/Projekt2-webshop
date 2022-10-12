@@ -17,3 +17,7 @@ axios.interceptors.request.use((config) => {
 export const getProducts = async (): Promise<ProductItem[]> => {
     return (await axios.get("/products")).data;
 }
+
+export const getProductById = async (id: string): Promise<ProductItem> => {
+return await axios.get(`/products/${id}`)
+}

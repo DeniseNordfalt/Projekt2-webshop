@@ -26,7 +26,7 @@ const ProductFeed = (props: Props) => {
     <div>
       <StyledList>
         {productList.map((product) => {
-          return <ProductCard data={product} />;
+          return <ProductCard data={product} key={product._id}/>;
         })}
       </StyledList>
     </div>
