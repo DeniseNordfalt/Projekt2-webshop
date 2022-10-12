@@ -16,3 +16,9 @@ const productModel = mongoose.model<ProductItem>("products", productSchema);
 export const loadAllProducts = async (): Promise<ProductItem[]> => {
   return await productModel.find({}).exec();
 };
+
+export const loadProductById = async (
+  id: string
+): Promise<ProductItem | null> => {
+  return await productModel.findById(id).exec();
+};
