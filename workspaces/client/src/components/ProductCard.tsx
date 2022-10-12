@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
   max-width: 250px;
-  height: 320px;
+  min-height: 350px;
   overflow-y: none;
   margin: 10px; 
   padding: 10px;
@@ -20,15 +20,16 @@ type ThemeProps = {
 const Thumbnail = styled.div`
   position: relative;
   width: 100%;
-  height: 35%;
+  height: 75%;
   background-image: ${(props: ThemeProps) => `url(${props.src})`};
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 const TextWrapper = styled.div`
 padding: 5px 15px 15px 15px;
-height: 55%;
+height: 20%;
 overflow: hidden;
 `;
 
@@ -45,7 +46,7 @@ const ProductCard = ({ data }: Props) => {
       <Thumbnail src={data.images[0]} />
       <TextWrapper>
         <h3 style={{margin: "10px"}}>{data.name}</h3>
-        <p>{data.description}</p>
+        {/* <p>{data.description}</p> */}
       </TextWrapper>
     </Container>
   );
