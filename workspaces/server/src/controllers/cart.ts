@@ -20,6 +20,21 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
 
 }
 
+export const createCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
+    const user = req.user?.userId
+    const product = req.params
+    console.log(user, 'hej', product)
+    res.json({ user: user, procuct: product })
+
+}
+
+
+
+
+
+
+
+
 
 
 

@@ -11,6 +11,6 @@ router.get("/hello", (req: Request, res: Response) => {
 
 router.use("/users", userRoutes);
 router.use("/auth", authRoutes);
-router.use("/shoppingcart", cartRoutes);
+router.use("/shoppingcart/", cartRoutes);
 
 export default router
