@@ -13,6 +13,7 @@ export default function ProductPage(props: Props) {
 
 const fetchData = async () => {
   const data = await getProductById(productId || "")
+  console.log(data)
   setProduct(data)
 }
 
