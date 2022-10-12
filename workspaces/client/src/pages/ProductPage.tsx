@@ -34,6 +34,13 @@ const InfoContainer = styled.div`
     margin-right: 10px;
   }
   `
+  const StyledButton  = styled.button`
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  border:none;
+  padding: 15px;
+  `
 
 export default function ProductPage(props: Props) {
   const [product, setProduct] = useState<ProductItem | null>(null);
@@ -53,6 +60,10 @@ export default function ProductPage(props: Props) {
     setCurrentImage(product?.images[0] || "");
   }, [product])
 
+
+  const handleOnClick = () => {
+console.log("CLICKED", productId)
+  }
   return (
     <>
       <Layout />
@@ -73,7 +84,9 @@ export default function ProductPage(props: Props) {
               <p style={{fontSize: "20px"}}>{product.price}</p>
               <p>{product.weight}</p>
               </div>
-            <p>{product.description}</p></InfoContainer>
+            <p>{product.description}</p>
+            <StyledButton onClick={handleOnClick}>Add to cart</StyledButton>
+            </InfoContainer>
           </ProductInfoWrapper>
         </div>
       )}
