@@ -41,7 +41,7 @@ export const deleteShoppingCartItem = async (userId: string, product: string): P
 }
 
 
-export const getShoppingCart = async (userId: string): Promise<CartItem[]> => {
+export const getShoppingCart = async (userId: string | undefined): Promise<CartItem[]> => {
     return await ShoppingCartModel.find({ user: userId, paid: false })
 }
 export const getPurchases = async (userId: string): Promise<CartItem[]> => {
