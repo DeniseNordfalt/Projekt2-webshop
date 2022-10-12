@@ -1,7 +1,10 @@
+
 import { NextFunction } from "express";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { UserItem } from "@project-webbshop/shared";
+
+
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -18,12 +21,14 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre(/save/, async function (next): Promise<void> {
+
   if (this.modifiedPaths().includes("password")) {
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
   }
   next();
 });
+
 
 // userSchema.statics.login = async function (username: string, password: string): Promise<UserItem>{
 //   const user = await this.findOne({ username });
@@ -39,11 +44,13 @@ export const handleNewUser = async (user: UserItem): Promise<UserItem> => {
   return newUser;
 };
 
+
 export const verifyUser = async (
   email: string,
   password: string
 ): Promise<UserItem | null> => {
   const user = (await User.findOne({ email })) as unknown as UserItem;
+
   return user && password && (await bcrypt.compare(password, user.password))
     ? user
     : null;
