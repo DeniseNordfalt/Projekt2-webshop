@@ -5,10 +5,11 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
   max-width: 250px;
-  height: 300px;
+  height: 320px;
   overflow-y: none;
   margin: 10px; 
-  box-shadow: 2px 2px 10px lightgrey;
+  padding: 10px;
+  border: 1px solid black;
 `;
 
 type ThemeProps = {
@@ -26,6 +27,8 @@ const Thumbnail = styled.div`
 
 const TextWrapper = styled.div`
 padding: 5px 15px 15px 15px;
+height: 55%;
+overflow: hidden;
 `;
 
 type Props = {
