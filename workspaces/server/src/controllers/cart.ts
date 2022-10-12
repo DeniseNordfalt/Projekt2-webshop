@@ -1,7 +1,8 @@
 import { TokenPayload, UserItem } from "@project-webbshop/shared";
 import { Request, Response } from "express";
 import { JwtRequest } from "../app";
-import { getShoppingCart } from "../models/ShoppingCart";
+import { loadProductById } from "../models/Product";
+import { createShoppingCart, getShoppingCart } from "../models/ShoppingCart";
 
 
 
@@ -20,11 +21,42 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
 
 }
 
-export const createCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
-    const user = req.user?.userId
-    const product = req.params
-    console.log(user, 'hej', product)
-    res.json({ user: user, procuct: product })
+export const createCart = async (req: JwtRequest<any>, res: Response) => {
+    const user = req.user?.userId as string
+    const productId = req.params.id as string
+
+
+
+
+    try {
+        const product = await loadProductById(req.params.id);
+
+        if (product) {
+            const cartItem = {
+                user: user,
+                product: product.name,
+                description: product.description,
+                category: product.category,
+                weight: product.weight,
+                price: product.price,
+                manufacturer: product.manufacturer,
+                images: product.images
+
+
+            }
+            const addToCart = await createShoppingCart(cartItem)
+            res.json({ addToCart })
+        }
+    } catch (error) {
+
+    }
+
+
+
+
+
+
+
 
 }
 
