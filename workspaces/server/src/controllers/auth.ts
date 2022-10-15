@@ -5,7 +5,7 @@ import { TokenPayload } from "@project-webbshop/shared";
 import { JwtRequest } from "../app";
 
 export const requireLogin = (req: JwtRequest<TokenPayload>, res: Response, next: NextFunction) => {
-    req.user ? next() : res.status(401).json({ error: "Unauthorized" });
+  req.user ? next() : res.status(401).json({ error: "Unauthorized" });
 };
 
 export const logInUser = async (req: Request, res: Response) => {
@@ -18,7 +18,7 @@ export const logInUser = async (req: Request, res: Response) => {
         process.env.JWT_SECRET as string,
         { expiresIn: "1h", subject: email }
       );
-    res.cookie("access_token", token, {httpOnly: true}).json(user);
+      res.cookie("access_token", token, { httpOnly: true }).json(user);
     }
   } catch (err) {
     console.error("ERROR: ", err);
