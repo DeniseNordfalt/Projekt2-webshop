@@ -23,8 +23,8 @@ const ShoppingCartModel = mongoose.model<CartItem>('ShoppingCart', ShoppingCart)
 
 //admin
 
-export const loadAllBuys = async (): Promise<CartItem[]> => {
-    return await ShoppingCartModel.find({ paid: true }).exec()
+export const getAllCarts = async (): Promise<CartItem[]> => {
+    return await ShoppingCartModel.find({ paid: false }).exec()
 }
 
 //customer && admin 
@@ -42,6 +42,12 @@ export const deleteAllCart = async (userId: string): Promise<void> => {
 export const deleteShoppingCartItem = async (userId: string, id: string): Promise<void> => {
 
     await ShoppingCartModel.deleteOne({ user: userId, _id: id })
+}
+export const changeOrder = async (cartId: string): Promise<void> => {
+    await ShoppingCartModel.updateOne({ _id: cartId }, { paid: false })
+}
+export const changeCartStatus = async (cartId: string): Promise<void> => {
+    await ShoppingCartModel.updateOne({ _id: cartId }, { paid: true })
 }
 
 

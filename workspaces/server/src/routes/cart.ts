@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { createBuy, createCart, deleteCart, deteleCartItem, getCart } from '../controllers/cart';
+import { changeCartItem, createBuy, createCart, deleteCart, deteleCartItem, getAllCartItems, getCart } from '../controllers/cart';
 
 
 const router: Router = express.Router();
@@ -9,6 +9,8 @@ router.post("/", createCart)
 router.patch("/", deteleCartItem)
 router.delete("/", deleteCart)
 router.patch("/purchase", createBuy)
+router.patch("/admin", changeCartItem)
+router.get("/admin", getAllCartItems)
 
 
 export default router
