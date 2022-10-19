@@ -54,7 +54,7 @@ export const changeOrderStatus = async (req: JwtRequest<any>, res: Response) => 
 
         }
     } else {
-        res.json('Unauthorized')
+        res.status(401).json('Unauthorized')
     }
 }
 

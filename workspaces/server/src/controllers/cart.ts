@@ -105,7 +105,7 @@ export const changeCartItem = async (req: JwtRequest<any>, res: Response) => {
 
         }
     } else {
-        res.json('Unauthorized')
+        res.status(401).json('Unauthorized')
     }
 }
 export const getAllCartItems = async (req: JwtRequest<any>, res: Response) => {
@@ -123,7 +123,7 @@ export const getAllCartItems = async (req: JwtRequest<any>, res: Response) => {
 
         }
     } else {
-        res.json('Unauthorized')
+        res.status(401).json('Unauthorized')
     }
 }
 
