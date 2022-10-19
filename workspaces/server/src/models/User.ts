@@ -55,3 +55,10 @@ export const verifyUser = async (
     ? user
     : null;
 };
+
+export const findUserById = async (id: string): Promise<UserItem | null> => {
+  return await User.findById(id);
+}
+export const updateUser = async (id: string, user: UserItem): Promise<UserItem | void> => {
+
+}

@@ -12,13 +12,14 @@ export const logInUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
     const user = await verifyUser(email, password);
+
     if (user) {
       const token = jwt.sign(
         { userId: user._id, email: user.email, roles: user.roles },
         process.env.JWT_SECRET as string,
         { expiresIn: "1h", subject: email }
       );
-      res.cookie("access_token", token, { httpOnly: true }).json(user);
+      res.status(200).json({ token, user });
     } else {
       res.status(401).json({ error: "Invalid email or password" });
     }
