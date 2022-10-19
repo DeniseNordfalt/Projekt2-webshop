@@ -4,7 +4,7 @@ import { ProductItem } from "@project-webbshop/shared";
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  category: { type: String, required: true, lowecase: true },
+  category: { type: String, required: true, lowercase: true },
   weight: { type: String, required: true },
   price: { type: String, required: true },
   manufacturer: { type: String, required: true },

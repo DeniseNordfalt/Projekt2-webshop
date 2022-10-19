@@ -8,5 +8,5 @@ export interface CartItem {
     price: string,
     manufacturer: string,
     images: string[]
-    paid: boolean
+    paid?: boolean
 }
