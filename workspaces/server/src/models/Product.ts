@@ -14,12 +14,32 @@ const productSchema = new mongoose.Schema({
 const productModel = mongoose.model<ProductItem>("products", productSchema);
 
 export const loadAllProducts = async (): Promise<ProductItem[]> => {
-  return await productModel.find({}).exec();
+  try {
+    const products = await productModel.find();
+    return products;
+  } catch (err) {
+    throw new Error(err as string);
+  }
 };
 
 export const loadProductById = async (
   id: string
 ): Promise<ProductItem | null> => {
+  try {
+    const product = await productModel.findById(id);
+    return product;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
 
-  return await productModel.findById(id).exec();
+export const handleNewProduct = async (
+  product: ProductItem
+): Promise<ProductItem> => {
+  try {
+    const newProduct = await productModel.create(product);
+    return newProduct;
+  } catch (err) {
+    throw new Error(err as string);
+  }
 };
