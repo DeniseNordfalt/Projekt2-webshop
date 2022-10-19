@@ -60,5 +60,5 @@ export const findUserById = async (id: string): Promise<UserItem | null> => {
   return await User.findById(id);
 }
 export const updateUser = async (id: string, edits: Partial<UserItem>): Promise<UserItem | null> => {
-  return await User.findByIdAndUpdate(id, edits).exec();
+  return await User.findByIdAndUpdate(id, edits, {new: true}).exec();
 }
