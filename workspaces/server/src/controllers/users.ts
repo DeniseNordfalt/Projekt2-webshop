@@ -37,38 +37,30 @@ export const editUser = async (
 
   editables.forEach((item) => {
     if (body.hasOwnProperty(item)) {
-      if (item === "deliveryAddress") {
-        const adressEditables = [
-          "streetName",
-          "streetNumber",
-          "county",
-          "postalCode",
-        ];
+    //   if (item === "deliveryAddress") {
+    //     const adressEditables = ["streetName", "streetNumber", "county", "postalCode"];
 
-        adressEditables.forEach((adressItem) => {
-          if (body[item].hasOwnProperty(adressItem)) {
-            edits[item as keyof UserItem][adressItem] =
-              body[item][adressItem];
-          }
-        });
-      } else {
+        // adressEditables.forEach((adressItem) => {
+        //   if (body[item].hasOwnProperty(adressItem)) {
+        //     edits[item as keyof UserItem][adressItem] = body[item][adressItem]
+        //   }
+        // });
+    //   } else {
         edits[item as keyof UserItem] = body[item];
-      }
+    //   }
     }
-  });
+  });    
+  if (Object.keys(edits).length) {
+    let user: UserItem | null = null;
+    try {
+        user = await updateUser(req.user?.userId || "", edits)
+    } catch(err) {
+        console.error("ERROR: ", err);
+        res.json({ error: "User not found" });
+    }
+    user ? res.json({ message: "User updated!", user }) : res.json({ error: "User not found" });
+  } else {
+    res.json({ message: "edit user" });
 
-  // { username: req.user.username },
-  // {
-  //   $set: {
-  //     firstname: user.firstname,
-  //     lastname: user.lastname,
-  //     email: user.email,
-  //     image,
-  //     settings: {
-  //       name: user.setting_name,
-  //       email: user.setting_email,
-  //     },
-  //   },
-  // }
-  res.json({ message: "edit user" });
+  }
 };
