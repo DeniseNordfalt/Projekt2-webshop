@@ -1,0 +1,5 @@
+workspaces/client/node_modules
+workspaces/client/build
+workspaces/server/node_modules
+workspaces/server/dist
+node_modules
