@@ -19,6 +19,8 @@ export const logInUser = async (req: Request, res: Response) => {
         { expiresIn: "1h", subject: email }
       );
       res.cookie("access_token", token, { httpOnly: true }).json(user);
+    } else {
+      res.status(401).json({ error: "Invalid email or password" });
     }
   } catch (err) {
     console.error("ERROR: ", err);
