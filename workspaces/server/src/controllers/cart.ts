@@ -2,7 +2,7 @@ import { TokenPayload, UserItem } from "@project-webbshop/shared";
 import { Request, Response } from "express";
 import { JwtRequest } from "../app";
 import { loadProductById } from "../models/Product";
-import { createShoppingCart, getShoppingCart } from "../models/ShoppingCart";
+import { createPurchase, createShoppingCart, deleteAllCart, deleteShoppingCartItem, getShoppingCart } from "../models/ShoppingCart";
 
 
 
@@ -23,13 +23,13 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
 
 export const createCart = async (req: JwtRequest<any>, res: Response) => {
     const user = req.user?.userId as string
-    const productId = req.params.id as string
+
 
 
 
 
     try {
-        const product = await loadProductById(req.params.id);
+        const product = await loadProductById(req.body.productId);
 
         if (product) {
             const cartItem = {
@@ -47,18 +47,53 @@ export const createCart = async (req: JwtRequest<any>, res: Response) => {
             const addToCart = await createShoppingCart(cartItem)
             res.json({ addToCart })
         }
-    } catch (error) {
-
+    } catch (err) {
+        console.error(err)
+        res.status(404).json({ message: err })
     }
 
 
+}
 
-
-
-
-
+export const deteleCartItem = async (req: JwtRequest<any>, res: Response) => {
+    const cartItem = req.body.cartId
+    const userId = req.user?.userId as string
+    try {
+        await deleteShoppingCartItem(userId, cartItem)
+        res.json({ message: 'Cart-item Deleted' })
+    } catch (err) {
+        console.error(err)
+        res.status(404).json({ message: err })
+    }
 
 }
+export const deleteCart = async (req: JwtRequest<any>, res: Response) => {
+    const userId = req.user?.userId as string
+
+    try {
+        await deleteAllCart(userId)
+        res.json({ message: 'Cart deleted' })
+    } catch (err) {
+        console.error(err)
+        res.status(404).json({ message: err })
+    }
+
+}
+export const createBuy = async (req: JwtRequest<any>, res: Response) => {
+    const userId = req.user?.userId as string
+
+    try {
+        await createPurchase(userId)
+        res.json({ message: 'Purchase made!' })
+    } catch (err) {
+        console.error(err)
+        res.status(404).json({ message: err })
+    }
+}
+
+
+
+
 
 
 

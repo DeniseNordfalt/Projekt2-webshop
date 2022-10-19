@@ -22,4 +22,6 @@ export const loadProductById = async (
 ): Promise<ProductItem | null> => {
 
   return await productModel.findById(id).exec();
+
+
 };

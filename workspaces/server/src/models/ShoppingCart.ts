@@ -35,17 +35,24 @@ export const createShoppingCart = async (cartItem: CartItem): Promise<void> => {
 export const createPurchase = async (userId: string): Promise<void> => {
     await ShoppingCartModel.updateMany({ user: userId, paid: false }, { paid: true })
 }
+export const deleteAllCart = async (userId: string): Promise<void> => {
+    await ShoppingCartModel.deleteMany({ user: userId, paid: false },)
+}
 
-export const deleteShoppingCartItem = async (userId: string, product: string): Promise<void> => {
-    await ShoppingCartModel.deleteOne({ user: userId, product: product })
+export const deleteShoppingCartItem = async (userId: string, id: string): Promise<void> => {
+
+    await ShoppingCartModel.deleteOne({ user: userId, _id: id })
 }
 
 
 export const getShoppingCart = async (userId: string | undefined): Promise<CartItem[]> => {
-    return await ShoppingCartModel.find({ user: userId, paid: false })
+    return await ShoppingCartModel.find({ user: userId, paid: false }).exec()
 }
 export const getPurchases = async (userId: string): Promise<CartItem[]> => {
-    return await ShoppingCartModel.find({ user: userId, paid: true })
+    return await ShoppingCartModel.find({ user: userId, paid: true }).exec()
+}
+export const getAllPurchases = async (): Promise<CartItem[]> => {
+    return await ShoppingCartModel.find({ paid: true }).exec()
 }
 
 
