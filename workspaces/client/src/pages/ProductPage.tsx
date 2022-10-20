@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { ProductItem } from "@project-webbshop/shared";
 import { useParams } from "react-router-dom";
-import { getProductById } from "../components/api";
+import { getProductById } from "../api";
 import styled from "styled-components";
 
 type Props = {};
@@ -22,25 +22,26 @@ const ProductInfoWrapper = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;`
+  padding: 20px;
+`;
 
-  const Thumbnails = styled.div`
+const Thumbnails = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  img{
+  img {
     width: 100%;
     max-width: 70px;
     margin-right: 10px;
   }
-  `
-  const StyledButton  = styled.button`
+`;
+const StyledButton = styled.button`
   background-color: black;
   color: white;
   font-size: 18px;
-  border:none;
+  border: none;
   padding: 15px;
-  `
+`;
 
 export default function ProductPage(props: Props) {
   const [product, setProduct] = useState<ProductItem | null>(null);
@@ -56,36 +57,47 @@ export default function ProductPage(props: Props) {
     fetchData();
   }, []);
 
-  useEffect(()=> {
+  useEffect(() => {
     setCurrentImage(product?.images[0] || "");
-  }, [product])
-
+  }, [product]);
 
   const handleOnClick = () => {
-console.log("CLICKED", productId)
-  }
+    console.log("CLICKED", productId);
+  };
   return (
     <>
-      <Layout />
       {product && (
         <div>
-          <h2 style={{textAlign: "center"}}>{product.name}</h2>
+          <h2 style={{ textAlign: "center" }}>{product.name}</h2>
           <ProductInfoWrapper>
-            <div style={{width: "100%"}}>
-            {currentImage && <><img src={currentImage} alt={product.name} />
-            <Thumbnails>
-              {product.images.map((image, index) => {
-                return <img key={index} src={currentImage} onClick={(e: any) => {setCurrentImage(e.target?.src)}} />
-              })}
-            </Thumbnails></>}
+            <div style={{ width: "100%" }}>
+              {currentImage && (
+                <>
+                  <img src={currentImage} alt={product.name} />
+                  <Thumbnails>
+                    {product.images.map((image, index) => {
+                      return (
+                        <img
+                          key={index}
+                          src={currentImage}
+                          alt={product.name}
+                          onClick={(e: any) => {
+                            setCurrentImage(e.target?.src);
+                          }}
+                        />
+                      );
+                    })}
+                  </Thumbnails>
+                </>
+              )}
             </div>
             <InfoContainer>
               <div>
-              <p style={{fontSize: "20px"}}>{product.price}</p>
-              <p>{product.weight}</p>
+                <p style={{ fontSize: "20px" }}>{product.price}</p>
+                <p>{product.weight}</p>
               </div>
-            <p>{product.description}</p>
-            <StyledButton onClick={handleOnClick}>Add to cart</StyledButton>
+              <p>{product.description}</p>
+              <StyledButton onClick={handleOnClick}>Add to cart</StyledButton>
             </InfoContainer>
           </ProductInfoWrapper>
         </div>

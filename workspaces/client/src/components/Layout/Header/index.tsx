@@ -9,9 +9,6 @@ export default function Header({}: Props) {
       <s.Logo>LOGO</s.Logo>
       <s.Nav>
         <s.NavItem>Home</s.NavItem>
-        <s.NavItem>Home</s.NavItem>
-        <s.NavItem>Home</s.NavItem>
-        <s.NavItem>Home</s.NavItem>
       </s.Nav>
 
       <s.User>
