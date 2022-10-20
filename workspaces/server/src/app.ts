@@ -29,14 +29,16 @@ export interface JwtRequest<T> extends Request<T> {
 
 app.use(
   async (req: JwtRequest<TokenPayload>, res: Response, next: NextFunction) => {
-    const token = req.cookies.access_token;
-    if (token) {
+    // const token = req.cookies.access_token;
+    const authHeader = req.header("Authorization");
+    if (authHeader && authHeader.split(" ")[0] === "Bearer") {
+      const token = authHeader.split(" ")[1];
       try {
         req.user = jwt.verify(
           token,
           process.env.JWT_SECRET as string
         ) as TokenPayload;
-        console.log("TOKEN IS OK")
+        console.log("TOKEN IS OK");
       } catch (err) {
         if (err instanceof JsonWebTokenError) {
           console.error(err);
