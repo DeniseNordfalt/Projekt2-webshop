@@ -10,13 +10,13 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true },
-  phoneNumber: { type: String, required: false },
+  phoneNumber: { type: String, default: null },
   roles: { type: [String], required: true, default: ["customer"] },
   deliveryAddress: {
-    streetName: { type: String, required: false },
-    streetNumber: { type: Number, required: false },
-    county: { type: String, required: false },
-    postalCode: { type: Number, required: false },
+    streetName: { type: String, default: null },
+    streetNumber: { type: Number, default: null },
+    county: { type: String, default: null },
+    postalCode: { type: Number, default: null },
   },
 });
 

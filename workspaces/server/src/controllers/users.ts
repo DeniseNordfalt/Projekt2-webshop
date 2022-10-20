@@ -37,30 +37,42 @@ export const editUser = async (
 
   editables.forEach((item) => {
     if (body.hasOwnProperty(item)) {
-    //   if (item === "deliveryAddress") {
-    //     const adressEditables = ["streetName", "streetNumber", "county", "postalCode"];
+      edits[item as keyof UserItem] = body[item];
+        
+      if (item === "deliveryAddress") {
+        const adressEditables = [
+          "streetName",
+          "streetNumber",
+          "county",
+          "postalCode",
+        ];
 
-        // adressEditables.forEach((adressItem) => {
-        //   if (body[item].hasOwnProperty(adressItem)) {
-        //     edits[item as keyof UserItem][adressItem] = body[item][adressItem]
-        //   }
-        // });
-    //   } else {
-        edits[item as keyof UserItem] = body[item];
-    //   }
+        type AddressKey = {
+          [key: string]: string | number;
+        };
+        adressEditables.forEach((adressItem) => {
+          if (body[item].hasOwnProperty(adressItem)) {
+            (edits[item as keyof UserItem] as AddressKey)[adressItem] =
+              body[item][adressItem];
+          }
+        });
+      } 
     }
-  });    
+  });
+  console.log("EDITS", edits);
+
   if (Object.keys(edits).length) {
     let user: UserItem | null = null;
     try {
-        user = await updateUser(req.user?.userId || "", edits)
-    } catch(err) {
-        console.error("ERROR: ", err);
-        res.json({ error: "User not found" });
+      user = await updateUser(req.user?.userId || "", edits);
+    } catch (err) {
+      console.error("ERROR: ", err);
+      res.json({ error: "User not found" });
     }
-    user ? res.json({ message: "User updated!", user }) : res.json({ error: "User not found" });
+    user
+      ? res.json({ message: "User updated!", user })
+      : res.json({ error: "User not found" });
   } else {
-    res.json({ message: "edit user" });
-
+    res.json({ message: "Nothing to update" });
   }
 };
