@@ -42,11 +42,10 @@ const ProductCard = ({ data }: Props) => {
 
   return (
     <Container onClick={() => {
-      navigate(`/${data._id}`)}} key={data._id}>
+      navigate(`/products/${data._id}`)}} key={data._id}>
       <Thumbnail src={data.images[0]} />
       <TextWrapper>
         <h3 style={{margin: "10px"}}>{data.name}</h3>
-        {/* <p>{data.description}</p> */}
       </TextWrapper>
     </Container>
   );
