@@ -9,12 +9,10 @@ export const createUser = async (req: Request, res: Response) => {
   // TODO: check required fields
   try {
     const user = await handleNewUser(req.body);
-    console.log("USER", user);
+    res.status(200).json({ message: "User created!" });
   } catch (err) {
-    console.error("ERR", err);
     res.status(409).json({ error: "User already exists" });
   }
-  res.json({ message: "User created!" });
 };
 
 export const getUser = async (req: JwtRequest<TokenPayload>, res: Response) => {
@@ -38,7 +36,7 @@ export const editUser = async (
   editables.forEach((item) => {
     if (body.hasOwnProperty(item)) {
       edits[item as keyof UserItem] = body[item];
-        
+
       if (item === "deliveryAddress") {
         const adressEditables = [
           "streetName",
@@ -56,7 +54,7 @@ export const editUser = async (
               body[item][adressItem];
           }
         });
-      } 
+      }
     }
   });
   console.log("EDITS", edits);

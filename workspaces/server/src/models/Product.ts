@@ -33,12 +33,45 @@ export const loadProductById = async (
   }
 };
 
+export const loadProductsByCategory = async (
+  category: string
+): Promise<ProductItem[]> => {
+  try {
+    const products = await Product.find({ category });
+    return products;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
 export const handleNewProduct = async (
   product: ProductItem
 ): Promise<ProductItem> => {
   try {
     const newProduct = await Product.create(product);
     return newProduct;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
+export const handleUpdateProduct = async (
+  id: string,
+  product: ProductItem
+): Promise<ProductItem | null> => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, {
+      new: true,
+    });
+    return updatedProduct;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
+export const handleDeleteProduct = async (id: string): Promise<void> => {
+  try {
+    await Product.findByIdAndDelete(id);
   } catch (err) {
     throw new Error(err as string);
   }

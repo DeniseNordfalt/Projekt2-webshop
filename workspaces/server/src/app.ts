@@ -38,7 +38,6 @@ app.use(
           token,
           process.env.JWT_SECRET as string
         ) as TokenPayload;
-        console.log("TOKEN IS OK");
       } catch (err) {
         if (err instanceof JsonWebTokenError) {
           console.error(err);
