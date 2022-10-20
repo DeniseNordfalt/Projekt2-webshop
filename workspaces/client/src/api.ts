@@ -62,3 +62,10 @@ export const loginUser = async (
 export const getCart = async (): Promise<CartItem[]> => {
   return (await axios.get("/shoppingcart")).data;
 };
+
+export const deleteCartItem = async (cartId: string): Promise<void> => {
+  await axios.patch("/shoppingcart", {cartId})
+}
+export const purchase = async (): Promise<void> => {
+  await axios.patch("/shoppingcart/purchase")
+}
