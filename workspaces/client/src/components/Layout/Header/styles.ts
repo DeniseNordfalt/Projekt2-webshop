@@ -29,6 +29,7 @@ export const NavItem = styled.a`
   color: #000;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
+  text-decoration:none;
 
   &:hover {
     color: #007bff;

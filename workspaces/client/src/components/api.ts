@@ -1,4 +1,4 @@
-import { ProductItem } from "@project-webbshop/shared";
+import { CartItem, ProductItem } from "@project-webbshop/shared";
 import axios from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
@@ -20,4 +20,8 @@ export const getProducts = async (): Promise<ProductItem[]> => {
 
 export const getProductById = async (id: string): Promise<ProductItem> => {
 return (await axios.get(`/products/${id}`)).data
+}
+
+export const getCart =async (): Promise<CartItem[]> => {
+  return (await axios.get("/shoppingcart")).data
 }
