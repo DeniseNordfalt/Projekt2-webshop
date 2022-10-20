@@ -2,7 +2,7 @@ import { ProductItem } from '@project-webbshop/shared';
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import {encode} from 'base-64'
-import { getProductById } from '../api';
+import { getProductById } from '../../api';
 import Layout from '../Layout';
 import * as s from './styles'
 
