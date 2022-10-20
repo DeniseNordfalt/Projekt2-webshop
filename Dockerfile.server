@@ -1,0 +1,18 @@
+FROM node:16-alpine
+
+WORKDIR /usr/src/app
+
+COPY ./package*.json ./
+COPY ./workspaces/server/package*.json ./workspaces/server/
+COPY ./workspaces/shared/package*.json ./workspaces/shared/
+
+RUN npm ci -w workspaces/server
+
+COPY ./workspaces/server ./workspaces/server
+COPY ./workspaces/shared ./workspaces/shared
+
+RUN npm run build -w workspaces/server
+
+EXPOSE 4000
+
+CMD [ "node", "workspaces/server/dist/app.js" ]
