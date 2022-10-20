@@ -57,7 +57,6 @@ export const editUser = async (
       }
     }
   });
-  console.log("EDITS", edits);
 
   if (Object.keys(edits).length) {
     let user: UserItem | null = null;

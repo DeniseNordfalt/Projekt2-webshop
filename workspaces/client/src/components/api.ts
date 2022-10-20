@@ -2,7 +2,6 @@ import { CartItem, ProductItem } from "@project-webbshop/shared";
 import axios from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
-console.log(process.env.REACT_APP_SERVER_URL);
 axios.interceptors.request.use((config) => {
   if (!config?.headers) {
     config.headers = {};

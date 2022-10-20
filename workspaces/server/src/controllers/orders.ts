@@ -42,7 +42,6 @@ export const getAllOrders = async (req: JwtRequest<any>, res: Response) => {
 export const changeOrderStatus = async (req: JwtRequest<any>, res: Response) => {
     const isAdmin = req.user?.roles.includes('admin')
     const cartItem = req.body.cartId as string
-    console.log('hejhej')
 
     if (isAdmin) {
         try {
