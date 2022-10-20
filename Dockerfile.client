@@ -1,0 +1,21 @@
+FROM node:16-alpine
+
+WORKDIR /usr/src/app
+
+COPY ./package*.json ./
+COPY ./workspaces/client/package*.json ./workspaces/client/
+COPY ./workspaces/shared/package*.json ./workspaces/shared/
+
+RUN npm ci -w workspaces/client
+
+COPY ./workspaces/client/ ./workspaces/client/
+COPY ./workspaces/shared/ ./workspaces/shared/
+
+ARG APP_WEBSHOP_API
+ENV REACT_APP_SERVER_URL=${APP_WEBSHOP_API}
+
+RUN npm run build -w workspaces/client
+
+EXPOSE 3000
+
+CMD [ "npx", "serve", "workspaces/client/build" ]

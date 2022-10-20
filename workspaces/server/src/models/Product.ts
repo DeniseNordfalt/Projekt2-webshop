@@ -11,11 +11,11 @@ const productSchema = new mongoose.Schema({
   images: [{ type: String, required: true }],
 });
 
-const productModel = mongoose.model<ProductItem>("products", productSchema);
+const Product = mongoose.model<ProductItem>("products", productSchema);
 
 export const loadAllProducts = async (): Promise<ProductItem[]> => {
   try {
-    const products = await productModel.find();
+    const products = await Product.find();
     return products;
   } catch (err) {
     throw new Error(err as string);
@@ -26,7 +26,7 @@ export const loadProductById = async (
   id: string
 ): Promise<ProductItem | null> => {
   try {
-    const product = await productModel.findById(id);
+    const product = await Product.findById(id);
     return product;
   } catch (err) {
     throw new Error(err as string);
@@ -37,7 +37,7 @@ export const handleNewProduct = async (
   product: ProductItem
 ): Promise<ProductItem> => {
   try {
-    const newProduct = await productModel.create(product);
+    const newProduct = await Product.create(product);
     return newProduct;
   } catch (err) {
     throw new Error(err as string);
