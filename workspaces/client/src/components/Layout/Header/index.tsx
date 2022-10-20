@@ -8,8 +8,6 @@ export default function Header({}: Props) {
     <s.Container>
       <s.Logo>LOGO</s.Logo>
       <s.Nav>
-        <s.NavItem >Home</s.NavItem>
-        <s.NavItem>Home</s.NavItem>
         <s.NavItem>Home</s.NavItem>
         <s.NavItem href="/shoppingcart">Shoppingcart</s.NavItem>
       </s.Nav>
