@@ -3,7 +3,10 @@ import { ProductItem } from "@project-webbshop/shared";
 import {
   loadAllProducts,
   loadProductById,
+  loadProductsByCategory,
   handleNewProduct,
+  handleUpdateProduct,
+  handleDeleteProduct,
 } from "../models/Product";
 
 export const getProducts = async (req: Request, res: Response) => {
@@ -28,12 +31,42 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
+export const getProductsByCategory = async (req: Request, res: Response) => {
+  try {
+    const products = await loadProductsByCategory(req.params.category);
+    res.json(products);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const createProduct = async (req: Request, res: Response) => {
   const product: ProductItem = req.body;
   console.log(req.body);
   try {
     const newProduct = await handleNewProduct(product);
     res.json(newProduct);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const updateProduct = async (req: Request, res: Response) => {
+  const product: ProductItem = req.body;
+  const id = req.params.id;
+  try {
+    const updatedProduct = await handleUpdateProduct(id, product);
+    res.json(updatedProduct);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const deleteProduct = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  try {
+    await handleDeleteProduct(id);
+    res.json(`${id} was deleted`);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
