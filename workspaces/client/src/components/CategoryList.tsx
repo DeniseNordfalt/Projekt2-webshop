@@ -7,7 +7,7 @@ min-width: 250px;
 `
 const StyledList = styled.ul`
 list-style-type: "✌";
-
+padding-left: 17px;
 `
 
 const StyledListItem = styled.li`

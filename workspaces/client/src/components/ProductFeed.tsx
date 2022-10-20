@@ -6,11 +6,13 @@ import { getProducts } from "./api";
 import ProductCard from "./ProductCard";
 import { decode } from "base-64";
 import CategoryList from "./CategoryList";
+import SearchBar from "./SearchBar";
 
 const StyledList = styled.ul`
   display: flex;
   flex-wrap: wrap;
 `;
+
 type Props = {};
 
 const ProductFeed = (props: Props) => {
@@ -26,17 +28,17 @@ const ProductFeed = (props: Props) => {
   }, []);
   const uniqueCatagories: string[] = [];
   productList.forEach((item) => {
-    if (
-      !uniqueCatagories.includes(
-        item.category) && item.category
-    ) {
+    if (!uniqueCatagories.includes(item.category) && item.category) {
       uniqueCatagories.push(item.category);
     }
   });
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <CategoryList data={uniqueCatagories} />
+      <aside style={{marginLeft: "10px"}}>
+        <SearchBar />
+        <CategoryList data={uniqueCatagories} />
+      </aside>
       <StyledList>
         <>
           {console.log(
