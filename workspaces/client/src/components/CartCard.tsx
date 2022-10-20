@@ -1,6 +1,8 @@
-import { ProductItem } from '@project-webbshop/shared';
+import { CartItem, ProductItem } from '@project-webbshop/shared';
 import React from 'react'
 import styled from 'styled-components';
+import { deleteCartItem } from '../api';
+import CartFeed from './CartFeed';
 
 
 const Container = styled.div`
@@ -38,18 +40,35 @@ height: 20%;
 `;
 
 type Props = {
-  data: ProductItem;
+  data: CartItem;
+  fetchData: Function
 };
 
-const CartCard = ({data}: Props) => {
+const CartCard = ({data, fetchData}: Props) => {
+   
+  
+  
+  const removeCartItem = (data: string) => {
+    deleteCartItem(data)
+    
+    fetchData()
+    
+    
+  
+  }
+
+  
   return (
     <Container key={data._id}>
 
       <Thumbnail src={data.images[0]} />
       <TextWrapper>
-        <h3 style={{margin: "10px"}}>{data.name}</h3>
+        <h3 style={{margin: "10px"}}>{data.product}</h3>
         <p>{data.price}</p>
+        <button onClick={(e) => removeCartItem(data._id as string)}>remove</button>
+        
       </TextWrapper>
+      
       
     </Container>
   )
