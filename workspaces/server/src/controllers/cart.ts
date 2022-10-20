@@ -58,6 +58,7 @@ export const createCart = async (req: JwtRequest<any>, res: Response) => {
 export const deteleCartItem = async (req: JwtRequest<any>, res: Response) => {
     const cartItem = req.body.cartId
     const userId = req.user?.userId as string
+
     try {
         await deleteShoppingCartItem(userId, cartItem)
         res.json({ message: 'Cart-item Deleted' })
