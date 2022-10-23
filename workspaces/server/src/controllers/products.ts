@@ -25,8 +25,7 @@ export const getProductById = async (req: Request, res: Response) => {
     const product = await loadProductById(req.params.id);
     res.json(product);
   } catch (err: any) {
-    // res.status(500).json({ error: err.message });
-    res.status(404).json({ error: "Not a valid id" });
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -73,14 +72,15 @@ export const deleteProduct = async (req: Request, res: Response) => {
 export const getProductsBySearch = async (req: Request, res: Response) => {
   const search = req.params.search;
 
-  if (!search) {
-    return res.status(400).json({ error: "No search term" });
-  } else {
-    try {
-      const products = await searchProducts(search);
+  try {
+    const products = await searchProducts(search);
+
+    if (products.length > 0) {
       res.json(products);
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
+    } else {
+      res.json({ error: "No products found" });
     }
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
   }
 };
