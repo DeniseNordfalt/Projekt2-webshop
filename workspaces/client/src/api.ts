@@ -70,3 +70,17 @@ export const deleteCartItem = async (cartId: string): Promise<void> => {
 export const purchase = async (): Promise<void> => {
   await axios.patch("/shoppingcart/purchase")
 }
+
+export const getOrders = async (): Promise<CartItem[]> => {
+  
+  return  (await axios.get('/orders')).data
+}
+
+export const getAllOrders = async (): Promise<CartItem[]> => {
+  return (await axios.get('/orders/admin'))
+}
+
+export const changeOrderStatus = async (cartId: string): Promise<void> => {
+  await axios.patch('/orders/admin', cartId)
+}
+

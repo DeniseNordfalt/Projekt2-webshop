@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import ProductPage from "./pages/ProductPage";
 import UserPage from "./pages/UserPage";
 import CartPage from "./pages/CartPage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/products/:id" element={<ProductPage />}/>
         <Route path="/user" element={<UserPage />} />
         <Route path="/shoppingcart" element={<CartPage />} />
+        <Route path="/orders" element={<OrderPage />} />
       </Routes>
     </Layout>
   );
