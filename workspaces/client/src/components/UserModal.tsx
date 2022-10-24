@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { loginUser, registerUser } from "../api";
+import { UserContext } from "../App";
 
 type Props = {};
 
@@ -10,9 +11,12 @@ export default function UserModal({}: Props) {
   const [adress, setadress] = useState("");
   const [phone, setphone] = useState("");
 
+  const { user, setUser } = useContext(UserContext);
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = await loginUser(email, password);
+    setUser(data);
   };
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
