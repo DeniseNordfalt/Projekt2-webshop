@@ -10,7 +10,7 @@ export interface UserItem {
   name: string;
   email: string;
   password: string;
-  phoneNumber?: number;
+  phoneNumber?: string;
   roles: ("customer" | "admin")[];
   deliveryAddress?: Adress;
 }

@@ -16,9 +16,9 @@ axios.interceptors.request.use((config) => {
 });
 
 export const addToCart = async (productId: string): Promise<void> => {
-  console.log('productID', productId)
-  await axios.post('/shoppingcart', {productId})
-}
+  console.log("productID", productId);
+  await axios.post("/shoppingcart", { productId });
+};
 
 export const getProducts = async (): Promise<ProductItem[]> => {
   return (await axios.get("/products")).data;
@@ -29,20 +29,20 @@ export const getProductById = async (id: string): Promise<ProductItem> => {
 };
 
 export const registerUser = async (
-  email: string,
   name: string,
+  email: string,
   password: string,
-  phone: string,
-  deliveryAdress: string
+  phoneNumber: string,
+  deliveryAddress: object
 ): Promise<UserItem | null> => {
   try {
     return (
       await axios.post("/users", {
-        email,
         name,
+        email,
         password,
-        phone,
-        deliveryAdress,
+        phoneNumber,
+        deliveryAddress,
       })
     ).data;
   } catch (err) {
@@ -85,10 +85,8 @@ export const deleteCartItem = async (cartId: string): Promise<void> => {
   await axios.patch("/shoppingcart", { cartId });
 };
 export const purchase = async (): Promise<void> => {
-
   await axios.get("/shoppingcart/purchase");
 };
-
 
 export const getOrders = async (): Promise<CartItem[]> => {
   return (await axios.get("/orders")).data;
@@ -102,7 +100,9 @@ export const changeOrderStatus = async (cartId: string): Promise<void> => {
   await axios.patch("/orders/admin", cartId);
 };
 
-export const seachForProducts = async (search: string): Promise<ProductItem[]> => {
-  const res = await axios.get(`/products/search/${search}`)
-  return res.data as ProductItem[]
-}
+export const seachForProducts = async (
+  search: string
+): Promise<ProductItem[]> => {
+  const res = await axios.get(`/products/search/${search}`);
+  return res.data as ProductItem[];
+};
