@@ -2,8 +2,9 @@ import { ProductItem } from "@project-webbshop/shared";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { encode } from "base-64";
-import { editProduct, getProductById } from "../../api";
 import { UserContext } from "../../App";
+import { addToCart, editProduct, getProductById } from "../../api";
+import Layout from "../Layout";
 import * as s from "./styles";
 import ProductModal from "../ProductModal";
 
@@ -35,8 +36,9 @@ const DetailedProduct = (props: Props) => {
     }
   }, [product]);
 
-  const handleOnClick = () => {
-    console.log("CLICKED", productId);
+  const handleOnClick = (productId: string) => {
+    console.log(productId)
+    addToCart(productId)
   };
 
   const performProductEdit = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
@@ -97,7 +99,7 @@ const DetailedProduct = (props: Props) => {
                 <p>{product.weight}</p>
               </div>
               <p>{product.description}</p>
-              <s.StyledButton onClick={handleOnClick}>
+              <s.StyledButton onClick={(e) => handleOnClick(product._id as string)}>
                 Add to cart
               </s.StyledButton>
               <br />

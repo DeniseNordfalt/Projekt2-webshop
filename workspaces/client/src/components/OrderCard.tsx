@@ -39,6 +39,8 @@ height: 20%;
 
 `;
 
+
+
 type Props = {
   data: CartItem;
  

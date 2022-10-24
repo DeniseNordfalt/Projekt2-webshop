@@ -10,10 +10,46 @@ type Props = {}
 const StyledList = styled.div`
 
 display: flex;
-flex-direction:center;
 justify-content:center;
 flex-wrap: wrap;
-overflow-y:scroll;
+
+`
+const DivFixed = styled.div`
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  position:fixed;
+  bottom:32em;
+  width:350px;
+  right:0;
+  
+  
+  padding-top:10px;
+
+
+`
+const Container = styled.div`
+ display:flex;
+ flex-direction:center;
+ justify-content:center;
+ align-items:center;
+
+`
+const StyledButton  = styled.button`
+  
+background:black;
+color: white;
+font-size: 18px;
+width:auto;
+height:20%;
+border: none;
+padding: 15px;
+&:hover {
+  background:grey;
+  transition-duration: 0.4s;
+  cursor:pointer;
+}
 `
 
 
@@ -41,19 +77,22 @@ const CartFeed =() => {
   }, []);
 
   return (
-    <div>
+    <>
+    
       <StyledList>
         {cartList.map((cartList) => {
           return <CartCard fetchData={fetchData} data={cartList} key={cartList._id}/>;
         })}
 
       </StyledList>
-      <div>
-        <h3>Total: { `${totalCost} kr`}  </h3>
+      
+    
+    <DivFixed>
+    <h3>Total: { `${totalCost} kr`}  </h3>
 
-        <button onClick={(e) => createPurchase()}>SPEND THAT MOOONEEEEEEEEEYYY</button>
-      </div>
-    </div>
+    <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
+  </DivFixed>
+  </>
   )
 }
 

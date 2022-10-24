@@ -15,6 +15,11 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+export const addToCart = async (productId: string): Promise<void> => {
+  console.log("productID", productId);
+  await axios.post("/shoppingcart", { productId });
+};
+
 export const getProducts = async (): Promise<ProductItem[]> => {
   return (await axios.get("/products")).data;
 };
@@ -24,20 +29,20 @@ export const getProductById = async (id: string): Promise<ProductItem> => {
 };
 
 export const registerUser = async (
-  email: string,
   name: string,
+  email: string,
   password: string,
-  phone: string,
-  deliveryAdress: string
+  phoneNumber: string,
+  deliveryAddress: object
 ): Promise<UserItem | null> => {
   try {
     return (
       await axios.post("/users", {
-        email,
         name,
+        email,
         password,
-        phone,
-        deliveryAdress,
+        phoneNumber,
+        deliveryAddress,
       })
     ).data;
   } catch (err) {
@@ -80,8 +85,8 @@ export const deleteCartItem = async (cartId: string): Promise<void> => {
   await axios.patch("/shoppingcart", { cartId });
 };
 export const purchase = async (): Promise<void> => {
-  await axios.patch("/shoppingcart/purchase")
-}
+  await axios.get("/shoppingcart/purchase");
+};
 
 export const editProduct = async (id: string, form: FormData) => {
   await axios.patch(`products/id/${id}`, form);
