@@ -2,7 +2,7 @@ import { ProductItem } from "@project-webbshop/shared";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { encode } from "base-64";
-import { getProductById } from "../../api";
+import { addToCart, getProductById } from "../../api";
 import Layout from "../Layout";
 import * as s from "./styles";
 
@@ -26,8 +26,9 @@ const DetailedProduct = (props: Props) => {
     setCurrentImage(product?.images[0] || "");
   }, [product]);
 
-  const handleOnClick = () => {
-    console.log("CLICKED", productId);
+  const handleOnClick = (productId: string) => {
+    console.log(productId)
+    addToCart(productId)
   };
 
   return (
@@ -70,7 +71,7 @@ const DetailedProduct = (props: Props) => {
                 <p>{product.weight}</p>
               </div>
               <p>{product.description}</p>
-              <s.StyledButton onClick={handleOnClick}>
+              <s.StyledButton onClick={(e) => handleOnClick(product._id as string)}>
                 Add to cart
               </s.StyledButton>
             </s.InfoContainer>

@@ -15,6 +15,11 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+export const addToCart = async (productId: string): Promise<void> => {
+  console.log('productID', productId)
+  await axios.post('/shoppingcart', {productId})
+}
+
 export const getProducts = async (): Promise<ProductItem[]> => {
   return (await axios.get("/products")).data;
 };
@@ -80,7 +85,7 @@ export const deleteCartItem = async (cartId: string): Promise<void> => {
   await axios.patch("/shoppingcart", { cartId });
 };
 export const purchase = async (): Promise<void> => {
-  await axios.patch("/shoppingcart/purchase");
+  await axios.get("/shoppingcart/purchase");
 };
 
 export const getOrders = async (): Promise<CartItem[]> => {

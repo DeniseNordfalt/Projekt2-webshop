@@ -8,7 +8,7 @@ router.get("/", getCart)
 router.post("/", createCart)
 router.patch("/", deteleCartItem)
 router.delete("/", deleteCart)
-router.patch("/purchase", createBuy)
+router.get("/purchase", createBuy)
 router.patch("/admin", changeCartItem)
 router.get("/admin", getAllCartItems)
 
