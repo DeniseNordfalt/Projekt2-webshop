@@ -2,7 +2,7 @@ import { ProductItem } from "@project-webbshop/shared";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getProducts, seachForProducts } from "../api";
+import { addNewProduct, getProducts, seachForProducts } from "../api";
 import ProductCard from "./ProductCard";
 import { decode } from "base-64";
 import CategoryList from "./CategoryList";
@@ -22,6 +22,7 @@ const ProductFeed = (props: Props) => {
 
   const fetchData = async () => {
     const data = await getProducts();
+    console.log("DATA", data);
     setProductList(data);
   };
   useEffect(() => {
@@ -41,7 +42,7 @@ const ProductFeed = (props: Props) => {
   };
 
   const handleNewProduct = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
-    const files = target[6].files;
+    const files = target[5].files;
     const formData = new FormData();
 
     for (const key in updateProduct) {
@@ -49,18 +50,13 @@ const ProductFeed = (props: Props) => {
         formData.append(key, (updateProduct[key as keyof ProductItem] as unknown) as string);
       } else continue;
     }
-    updateProduct?.name && formData.append("name", updateProduct?.name || "");
-    formData.append("manufacturer", updateProduct?.manufacturer || "");
-    formData.append("category", updateProduct?.category || "");
-    formData.append("description", updateProduct?.description || "");
-    formData.append("price", updateProduct?.price || "");
-    formData.append("weight", updateProduct?.weight || "");
-    if (files.length > 0) {
+    if (files?.length) {
       for (const key in files) {
         formData.append("files", files[key]);
       }
     }
-    // editProduct(updateProduct?._id || "0", formData);
+    addNewProduct(formData);
+    fetchData();
     setIsModalVisible(false);
   };
 
@@ -79,7 +75,7 @@ const ProductFeed = (props: Props) => {
         >
           Add product
         </div>
-        {isModalVisible && <ProductModal data={{} as Partial<ProductItem>} handleOnSubmit={handleNewProduct} setVisibility={setIsModalVisible}/>}
+        {isModalVisible && <ProductModal data={{name: "", description: "", weight:"0", price:"", manufacturer:"", category:"", images: []}} handleOnSubmit={handleNewProduct} setVisibility={setIsModalVisible}/>}
         <CategoryList data={uniqueCatagories} />
       </aside>
       <StyledList>

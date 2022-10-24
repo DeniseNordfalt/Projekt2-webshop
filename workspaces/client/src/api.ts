@@ -103,3 +103,7 @@ export const seachForProducts = async (search: string): Promise<ProductItem[]> =
   const res = await axios.get(`/products/search/${search}`)
   return res.data as ProductItem[]
 }
+
+export const addNewProduct = async (form: any): Promise<void> => {
+  await axios.post("/products", form );
+}

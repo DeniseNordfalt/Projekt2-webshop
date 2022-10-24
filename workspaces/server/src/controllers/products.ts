@@ -39,6 +39,8 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   const product: ProductItem = req.body;
+  product.images = req.files as Express.Multer.File[] || [];
+  console.log(product)
   try {
     const newProduct = await handleNewProduct(product);
     res.json(newProduct);
@@ -54,7 +56,6 @@ export const updateProduct = async (req: Request, res: Response) => {
   if(product.images.length === 0) {
     delete product.images;
   }
-  console.log(product)
   try {
     const updatedProduct = await handleUpdateProduct(id, product);
     res.json(updatedProduct);
@@ -75,7 +76,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 
 export const getProductsBySearch = async (req: Request, res: Response) => {
-  console.log(req.params.search);
   const search = req.params.search;
   try {
     const products = await searchProducts(search);

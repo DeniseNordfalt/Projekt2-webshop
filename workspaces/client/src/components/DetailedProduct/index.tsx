@@ -40,7 +40,7 @@ const DetailedProduct = (props: Props) => {
   };
 
   const performProductEdit = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
-    const files = target[6].files;
+    const files = target[5].files;
     const formData = new FormData();
     formData.append("name", updateProduct?.name || "");
     formData.append("manufacturer", updateProduct?.manufacturer || "");
@@ -79,7 +79,7 @@ const DetailedProduct = (props: Props) => {
                       return (
                         <img
                           key={index}
-                          src={renderImage(image.filename)}
+                          src={renderImage(image?.filename)}
                           onClick={(e: any) => {
                             setCurrentImage(e.target?.src);
                           }}

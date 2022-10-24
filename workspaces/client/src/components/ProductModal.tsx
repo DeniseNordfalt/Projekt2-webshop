@@ -79,7 +79,6 @@ const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
           {renderInputField("name")}
           {renderInputField("manufacturer")}
           {renderInputField("category")}
-          {renderInputField("description")}
           {renderInputField("price")}
           {renderInputField("weight")}
           <input type="file" multiple />

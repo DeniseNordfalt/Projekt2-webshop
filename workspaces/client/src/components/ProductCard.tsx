@@ -41,14 +41,13 @@ const ProductCard = ({ data }: Props) => {
   const navigate = useNavigate();
 
 const renderImage = (imageName: string) =>  {
-  console.log(imageName);
   return `http://localhost:8800/uploads/${imageName}`
 }
 
   return (
     <Container onClick={() => {
       navigate(`/products/${data._id}`)}} key={data._id}>
-      <Thumbnail src={`${renderImage((data!.images[0] as any).filename)}`  || ""} />
+      <Thumbnail src={`${renderImage((data!.images[0] as any)?.filename)}`  || ""} />
       <TextWrapper>
         <h3 style={{margin: "10px"}}>{data.name}</h3>
       </TextWrapper>

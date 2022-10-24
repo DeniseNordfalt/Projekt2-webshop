@@ -24,8 +24,6 @@ const Container = styled.div`
 export default function ProfilePage({}: Props) {
   const { user } = useContext(UserContext);
 
-  console.log("user", user);
-
   // useEffect(() => {
   //     if (!user) {
   //         window.location.href = "/login";
