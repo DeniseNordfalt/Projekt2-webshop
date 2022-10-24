@@ -20,7 +20,6 @@ export const getProducts = async (req: Request, res: Response) => {
 };
 
 export const getProductById = async (req: Request, res: Response) => {
-  const id = req.params.id;
   try {
     const product = await loadProductById(req.params.id);
     res.json(product);
@@ -70,13 +69,13 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 
 export const getProductsBySearch = async (req: Request, res: Response) => {
+  console.log(req.params.search);
   const search = req.params.search;
-
   try {
     const products = await searchProducts(search);
-
     if (products.length > 0) {
       res.json(products);
+
     } else {
       res.json({ error: "No products found" });
     }

@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { seachForProducts } from "../api";
 
 const Container = styled.div`
   display: flex;
@@ -33,26 +35,34 @@ const InputField = styled.input`
   }
 `;
 
-type Props = {};
+type Props = {
+  filterFeedOnSearch: (searchTerm: string) => void;
+};
 
-const SearchBar = (props: Props) => {
+const SearchBar = ({filterFeedOnSearch}: Props) => {
   const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const navigate = useNavigate()
 
-  const handleOnSearch = () => {
-    console.log(searchTerm)
+  const handleOnSearch = async (e: any) => {
+    e.preventDefault();
+    navigate("/")
+    filterFeedOnSearch(searchTerm);
+    setSearchTerm("")
   };
 
   return (
-    <Container>
-      <InputField
-        placeholder="Search for product"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <div onClick={handleOnSearch}>
-        <img src="/search-icon.svg" alt="search icon"/>
-      </div>
-    </Container>
+    <form onSubmit={handleOnSearch}>
+      <Container>
+        <InputField
+          placeholder="Search for product"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div onClick={handleOnSearch}>
+          <img src="/search-icon.svg" alt="search icon" />
+        </div>
+      </Container>
+    </form>
   );
 };
 
