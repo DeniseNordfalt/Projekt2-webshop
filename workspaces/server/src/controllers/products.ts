@@ -51,12 +51,17 @@ export const updateProduct = async (req: Request, res: Response) => {
   const product = req.body;
   product.images = req.files || [];
   const id = req.params.id;
+  if(product.images.length === 0) {
+    delete product.images;
+  }
+  console.log(product)
   try {
     const updatedProduct = await handleUpdateProduct(id, product);
     res.json(updatedProduct);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
+
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {

@@ -29,7 +29,6 @@ export default function Header({}: Props) {
     localStorage.removeItem("access_token");
     setUser(null);
   };
-console.log(user)
   return (
     <s.Container>
       <s.Logo>

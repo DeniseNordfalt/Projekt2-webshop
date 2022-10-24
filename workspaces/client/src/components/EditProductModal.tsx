@@ -44,30 +44,13 @@ const StyledForm = styled.form`
 type Props = {
   setVisibility: Dispatch<SetStateAction<boolean>>;
   data: ProductItem | null;
+  handleOnSubmit: (target: any, updateProduct: ProductItem | null) => void;
 };
 
-const EditProductModal = ({ setVisibility, data }: Props) => {
+const EditProductModal = ({ setVisibility, data, handleOnSubmit }: Props) => {
   const [updateProduct, setUpdateProduct] = React.useState<ProductItem | null>(
     data
   );
-
-  const handleOnSubmit = (e: any) => {
-    e.preventDefault();
-    const files = e.target[6].files
-    const formData = new FormData();
-    formData.append("name", updateProduct?.name || "");
-    formData.append("manufacturer", updateProduct?.manufacturer || "");
-    formData.append("category", updateProduct?.category || "");
-    formData.append("description", updateProduct?.description || "");
-    formData.append("price", updateProduct?.price || "");
-    formData.append("weight", updateProduct?.weight || "");
-
-    for (const key in files) {
-        formData.append("files", files[key])
-    }
-    editProduct(updateProduct?._id || "0", formData);
-    setVisibility(false);
-  };
 
   const handleOnChange = (key: keyof ProductItem, value: string) => {
     setUpdateProduct({ ...updateProduct, [key]: value } as ProductItem);
@@ -90,14 +73,15 @@ const EditProductModal = ({ setVisibility, data }: Props) => {
   return (
     <Container>
       <Modal>
-        <StyledForm onSubmit={handleOnSubmit} encType="multipart/form-data">
-        {renderInputField("name")}
-        {renderInputField("manufacturer")}
-        {renderInputField("category")}
-        {renderInputField("description")}
-        {renderInputField("price")}
-        {renderInputField("weight")}
-        <input type="file" multiple/>
+        <StyledForm onSubmit={(e) => {e.preventDefault()
+          handleOnSubmit(e.target, updateProduct || null)}} encType="multipart/form-data">
+          {renderInputField("name")}
+          {renderInputField("manufacturer")}
+          {renderInputField("category")}
+          {renderInputField("description")}
+          {renderInputField("price")}
+          {renderInputField("weight")}
+          <input type="file" multiple />
           <textarea
             id="description"
             name="description"

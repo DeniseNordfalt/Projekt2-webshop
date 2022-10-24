@@ -2,7 +2,7 @@ import { ProductItem } from "@project-webbshop/shared";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { encode } from "base-64";
-import { getProductById } from "../../api";
+import { editProduct, getProductById } from "../../api";
 import { UserContext } from "../../App";
 import * as s from "./styles";
 import EditProductModal from "../EditProductModal";
@@ -15,11 +15,10 @@ const DetailedProduct = (props: Props) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const productId = useParams().id;
   const { user } = useContext(UserContext);
-  
-    const renderImage = (imageName: string) =>  {
-      console.log(imageName);
-      return `http://localhost:8800/uploads/${imageName}`
-    }
+
+  const renderImage = (imageName: string) => {
+    return `http://localhost:8800/uploads/${imageName}`;
+  };
 
   const fetchData = async () => {
     const data = await getProductById(productId || "");
@@ -31,17 +30,32 @@ const DetailedProduct = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    setCurrentImage(renderImage((product!.images[0] as any).originalname)  || ""
-    );
+    if (product) {
+      setCurrentImage(renderImage((product?.images[0] as any)?.filename));
+    }
   }, [product]);
 
   const handleOnClick = () => {
     console.log("CLICKED", productId);
   };
 
-  const toggleEditModal = () => {
-    setIsModalVisible(true);
+  const performProductEdit = (target: any, updateProduct: ProductItem | null): void => {
+    const files = target[6].files;
+    const formData = new FormData();
+    formData.append("name", updateProduct?.name || "");
+    formData.append("manufacturer", updateProduct?.manufacturer || "");
+    formData.append("category", updateProduct?.category || "");
+    formData.append("description", updateProduct?.description || "");
+    formData.append("price", updateProduct?.price || "");
+    formData.append("weight", updateProduct?.weight || "");
+    if (files.length > 0) {
+      for (const key in files) {
+        formData.append("files", files[key]);
+      }
     }
+    editProduct(updateProduct?._id || "0", formData);
+    setIsModalVisible(false);
+  };
 
   return (
     <>
@@ -61,11 +75,11 @@ const DetailedProduct = (props: Props) => {
                 <>
                   <img src={currentImage} alt={product.name} />
                   <s.Thumbnails>
-                    {product.images.map((image: any, index) => {
+                    {product?.images?.map((image: any, index) => {
                       return (
                         <img
                           key={index}
-                          src={renderImage(image.originalname)}
+                          src={renderImage(image.filename)}
                           onClick={(e: any) => {
                             setCurrentImage(e.target?.src);
                           }}
@@ -86,9 +100,19 @@ const DetailedProduct = (props: Props) => {
               <s.StyledButton onClick={handleOnClick}>
                 Add to cart
               </s.StyledButton>
-              <br/>
-              {user?.roles.includes("admin") && (<s.StyledButton onClick={toggleEditModal}>Edit product</s.StyledButton>)}
-            {isModalVisible && <EditProductModal data={product} setVisibility={setIsModalVisible}/>}
+              <br />
+              {user?.roles.includes("admin") && (
+                <s.StyledButton onClick={() => setIsModalVisible(true)}>
+                  Edit product
+                </s.StyledButton>
+              )}
+              {isModalVisible && (
+                <EditProductModal
+                  data={product}
+                  handleOnSubmit={performProductEdit}
+                  setVisibility={setIsModalVisible}
+                />
+              )}
             </s.InfoContainer>
           </s.ProductInfoWrapper>
         </div>
