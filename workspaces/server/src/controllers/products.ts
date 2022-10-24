@@ -48,7 +48,8 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
-  const product: ProductItem = req.body;
+  const product = req.body;
+  product.images = req.files || [];
   const id = req.params.id;
   try {
     const updatedProduct = await handleUpdateProduct(id, product);
@@ -83,3 +84,4 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
     res.status(500).json({ error: err.message });
   }
 };
+

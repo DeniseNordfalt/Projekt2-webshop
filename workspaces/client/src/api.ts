@@ -83,6 +83,10 @@ export const purchase = async (): Promise<void> => {
   await axios.patch("/shoppingcart/purchase")
 }
 
+export const editProduct = async (id: string, form: FormData) => {
+  await axios.patch(`products/id/${id}`, form);
+}
+
 export const getOrders = async (): Promise<CartItem[]> => {
   return (await axios.get("/orders")).data;
 };

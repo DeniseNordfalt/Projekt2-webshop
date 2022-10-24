@@ -29,7 +29,7 @@ export default function Header({}: Props) {
     localStorage.removeItem("access_token");
     setUser(null);
   };
-
+console.log(user)
   return (
     <s.Container>
       <s.Logo>
@@ -37,10 +37,12 @@ export default function Header({}: Props) {
       </s.Logo>
       <s.Nav>
         <s.NavItem href="/">Home</s.NavItem>
+        {user?.roles.includes("admin") &&
+          <s.NavItem href="/admin">Admin</s.NavItem>}
       </s.Nav>
-
       {user ? (
         <s.User>
+          
           <s.UserName onClick={handleClick}>{user?.name}</s.UserName>
 
           <s.UserMenu isVisible={isVisible}>

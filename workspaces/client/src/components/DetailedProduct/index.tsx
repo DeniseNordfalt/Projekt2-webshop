@@ -1,17 +1,25 @@
 import { ProductItem } from "@project-webbshop/shared";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { encode } from "base-64";
 import { getProductById } from "../../api";
-import Layout from "../Layout";
+import { UserContext } from "../../App";
 import * as s from "./styles";
+import EditProductModal from "../EditProductModal";
 
 type Props = {};
 
 const DetailedProduct = (props: Props) => {
   const [product, setProduct] = useState<ProductItem | null>(null);
-  const [currentImage, setCurrentImage] = useState<string>("");
+  const [currentImage, setCurrentImage] = useState<any>("");
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const productId = useParams().id;
+  const { user } = useContext(UserContext);
+  
+    const renderImage = (imageName: string) =>  {
+      console.log(imageName);
+      return `http://localhost:8800/uploads/${imageName}`
+    }
 
   const fetchData = async () => {
     const data = await getProductById(productId || "");
@@ -23,12 +31,17 @@ const DetailedProduct = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    setCurrentImage(product?.images[0] || "");
+    setCurrentImage(renderImage((product!.images[0] as any).originalname)  || ""
+    );
   }, [product]);
 
   const handleOnClick = () => {
     console.log("CLICKED", productId);
   };
+
+  const toggleEditModal = () => {
+    setIsModalVisible(true);
+    }
 
   return (
     <>
@@ -48,11 +61,11 @@ const DetailedProduct = (props: Props) => {
                 <>
                   <img src={currentImage} alt={product.name} />
                   <s.Thumbnails>
-                    {product.images.map((image, index) => {
+                    {product.images.map((image: any, index) => {
                       return (
                         <img
                           key={index}
-                          src={currentImage}
+                          src={renderImage(image.originalname)}
                           onClick={(e: any) => {
                             setCurrentImage(e.target?.src);
                           }}
@@ -73,6 +86,9 @@ const DetailedProduct = (props: Props) => {
               <s.StyledButton onClick={handleOnClick}>
                 Add to cart
               </s.StyledButton>
+              <br/>
+              {user?.roles.includes("admin") && (<s.StyledButton onClick={toggleEditModal}>Edit product</s.StyledButton>)}
+            {isModalVisible && <EditProductModal data={product} setVisibility={setIsModalVisible}/>}
             </s.InfoContainer>
           </s.ProductInfoWrapper>
         </div>
