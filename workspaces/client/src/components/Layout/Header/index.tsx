@@ -1,25 +1,60 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import * as s from "./styles";
+
+import { getUser } from "../../../api";
+
+import { UserContext } from "../../../App";
 
 type Props = {};
 
 export default function Header({}: Props) {
+  const { user, setUser } = useContext(UserContext);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  const handleClick = () => {
+    setIsVisible(!isVisible);
+  };
+
+  const fetchUser = async () => {
+    const data = await getUser();
+    setUser(data);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    setUser(null);
+  };
+
   return (
     <s.Container>
-      <s.Logo>LOGO</s.Logo>
+      <s.Logo>
+        <Link to={"/"}>LOGO</Link>
+      </s.Logo>
       <s.Nav>
-        <s.NavItem>Home</s.NavItem>
-        <s.NavItem href="/shoppingcart">Shoppingcart</s.NavItem>
+        <s.NavItem href="/">Home</s.NavItem>
       </s.Nav>
 
-      <s.User>
-        <s.UserAvatar />
-        <s.UserName>John Doe</s.UserName>
-        <s.UserMenu>
-          <s.UserMenuItem>Profile</s.UserMenuItem>
-          <s.UserMenuItem>Logout</s.UserMenuItem>
-        </s.UserMenu>
-      </s.User>
+      {user ? (
+        <s.User>
+          <s.UserName onClick={handleClick}>{user?.name}</s.UserName>
+
+          <s.UserMenu isVisible={isVisible}>
+            <s.UserMenuItem href="/me">Profile</s.UserMenuItem>
+            <s.UserMenuItem href="/orders">Orders</s.UserMenuItem>
+            <s.UserMenuItem href="/shoppingcart">ShoppingCart</s.UserMenuItem>
+            <s.UserMenuItem onClick={logout}>Logout</s.UserMenuItem>
+          </s.UserMenu>
+        </s.User>
+      ) : (
+        <s.User>
+          <s.UserMenuItem href="/user">Login</s.UserMenuItem>
+        </s.User>
+      )}
     </s.Container>
   );
 }

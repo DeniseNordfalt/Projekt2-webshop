@@ -7,6 +7,7 @@ services:
       - "4000:4000"
     environment:
       - MONGODB_URL=mongodb://db:27017/webShop
+      - JWT_SECRET=kjhgfdsakjhgfsdakjhgfsaiuytweqekhgjvsakjhbvskjhgasdkjhfgskajhfgjkhsaghjkdfgasjhhghgfhfhffhgffffffffshdhdhdhjhgbdysfghjsdfasdfguysfdguywguytf123456789234567893456789
   frontend:
     build:
       dockerfile: Dockerfile.client
