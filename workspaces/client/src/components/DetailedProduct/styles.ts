@@ -28,11 +28,19 @@ const InfoContainer = styled.div`
   }
   `
   const StyledButton  = styled.button`
-  background-color: black;
+  
+  background:black;
   color: white;
   font-size: 18px;
   border: none;
   padding: 15px;
+  &:hover {
+    background:grey;
+    transition-duration: 0.4s;
+    cursor:pointer;
+  }
+
+
   `
 
   export {

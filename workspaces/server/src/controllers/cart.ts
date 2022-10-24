@@ -8,10 +8,12 @@ import { changeCartStatus, createPurchase, createShoppingCart, deleteAllCart, de
 
 export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
     const user = req.user?.userId
+    console.log(user)
 
     try {
         const cart = await getShoppingCart(user)
-        res.json({ cart })
+        console.log(cart)
+        res.json(cart)
     } catch (err) {
         console.error("ERR", err)
         res.status(400).json({ error: "Cant load shoppingcart" })
@@ -24,7 +26,7 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
 export const createCart = async (req: JwtRequest<any>, res: Response) => {
     const user = req.user?.userId as string
 
-
+    console.log(req.body.productId)
 
 
 

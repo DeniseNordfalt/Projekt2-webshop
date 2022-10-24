@@ -8,13 +8,16 @@ import CartFeed from './CartFeed';
 const Container = styled.div`
   width: 50%;
   display:flex;
-  
+  justify-content:space-between;
   min-height: 200px;
   overflow-y: none;
   margin: 10px; 
   padding: 10px;
   border: 1px solid black;
+ 
 `;
+
+
 
 type ThemeProps = {
   src?: string;
@@ -36,9 +39,30 @@ const Thumbnail = styled.div`
 const TextWrapper = styled.div`
 width:100%;
 height: 20%;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+
+padding:10px;
+
 
 `;
+const StyledButton  = styled.button`
+  
+background:black;
+color: white;
+font-size: 18px;
+width:100px;
+margin:10px;
 
+border: none;
+padding: 15px;
+&:hover {
+  background:grey;
+  transition-duration: 0.4s;
+  cursor:pointer;
+}
+`
 type Props = {
   data: CartItem;
   fetchData: Function
@@ -64,10 +88,11 @@ const CartCard = ({data, fetchData}: Props) => {
       <Thumbnail src={data.images[0]} />
       <TextWrapper>
         <h3 style={{margin: "10px"}}>{data.product}</h3>
-        <p>{data.price}</p>
-        <button onClick={(e) => removeCartItem(data._id as string)}>remove</button>
+        <p style={{margin: "10px"}}>{data.price}</p>
+        <StyledButton onClick={(e) => removeCartItem(data._id as string)}>remove</StyledButton>
         
       </TextWrapper>
+      
       
       
     </Container>
