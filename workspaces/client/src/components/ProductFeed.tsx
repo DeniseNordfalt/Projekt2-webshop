@@ -22,7 +22,6 @@ const ProductFeed = (props: Props) => {
 
   const fetchData = async () => {
     const data = await getProducts();
-    console.log("DATA", data);
     setProductList(data);
   };
   useEffect(() => {

@@ -40,7 +40,6 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
   const product: ProductItem = req.body;
   product.images = req.files as Express.Multer.File[] || [];
-  console.log(product)
   try {
     const newProduct = await handleNewProduct(product);
     res.json(newProduct);
