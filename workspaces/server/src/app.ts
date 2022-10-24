@@ -12,6 +12,7 @@ import { setupMongoDb } from "./config/common";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { TokenPayload } from "@project-webbshop/shared";
+import multer from "multer";
 
 dotenv.config();
 
@@ -22,6 +23,19 @@ const mongoUrl: string = process.env.MONGODB_URL || "";
 app.use(cors());
 app.use(json());
 app.use(cookieParser());
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.use(upload.array("files"));
+app.use("/uploads", express.static("./uploads"));
 
 export interface JwtRequest<T> extends Request<T> {
   user?: TokenPayload;

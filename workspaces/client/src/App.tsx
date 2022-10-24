@@ -21,6 +21,7 @@ import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
 
 import ProfilePage from "./pages/ProfilePage";
+import Admin from "./pages/AdminPage";
 
 const UserContext = createContext<{
   user: UserItem | null;
@@ -39,6 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/:category" element={<Home />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/user" element={<UserPage />} />
