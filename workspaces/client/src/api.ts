@@ -60,8 +60,7 @@ export const loginUser = async (
 };
 
 export const getCart = async (): Promise<CartItem[]> => {
-  console.log("getCart()")
-  return (await axios.get("/shoppingcart")).data.cart;
+  return (await axios.get("/shoppingcart")).data;
 };
 
 export const deleteCartItem = async (cartId: string): Promise<void> => {

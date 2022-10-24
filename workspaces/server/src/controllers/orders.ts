@@ -43,7 +43,6 @@ export const changeOrderStatus = async (req: JwtRequest<any>, res: Response) => 
     const isAdmin = req.user?.roles.includes('admin')
     const cartItem = req.body.cartId as string
 
-
     if (isAdmin) {
         try {
             await changeOrder(cartItem)

@@ -35,9 +35,10 @@ type Props = {
 const CategoryList = (props: Props) => {
   return (
     <Container>
+      <h3>Categories</h3>
         <StyledList>
-            {props.data.map((item) => {
-                return <StyledListItem><a href={`/${encode(item)}`}>{item}</a></StyledListItem>
+            {props.data.map((item, index) => {
+                return <StyledListItem key={index}><a href={`/${encode(item)}`}>{item}</a></StyledListItem>
             })}
         </StyledList>
     </Container>
