@@ -1,3 +1,4 @@
+import { isVisible } from "@testing-library/user-event/dist/utils";
 import styled from "styled-components";
 
 export const Container = styled.header`
@@ -11,9 +12,14 @@ export const Container = styled.header`
 `;
 
 export const Logo = styled.h1`
+  text-decoration: none;
   font-size: 1.5rem;
   font-weight: 700;
   color: #000;
+  a {
+    text-decoration: none;
+    color: #000;
+  }
 `;
 
 export const Nav = styled.nav`
@@ -29,7 +35,7 @@ export const NavItem = styled.a`
   color: #000;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
-  text-decoration:none;
+  text-decoration: none;
 
   &:hover {
     color: #007bff;
@@ -57,6 +63,12 @@ export const UserName = styled.span`
   font-size: 1rem;
   font-weight: 500;
   color: #000;
+
+  &.hover {
+    #usermenu {
+      display: block;
+    }
+  }
 `;
 
 export const UserMenu = styled.div`
@@ -68,6 +80,8 @@ export const UserMenu = styled.div`
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  display: ${(props: { isVisible: boolean }) =>
+    props.isVisible ? "block" : "none"};
 `;
 
 export const UserMenuItem = styled.a`
