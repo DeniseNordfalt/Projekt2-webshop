@@ -69,3 +69,8 @@ export const deleteCartItem = async (cartId: string): Promise<void> => {
 export const purchase = async (): Promise<void> => {
   await axios.patch("/shoppingcart/purchase")
 }
+
+export const seachForProducts = async (search: string): Promise<ProductItem[]> => {
+  const res = await axios.get(`/products/search/${search}`)
+  return res.data as ProductItem[]
+}

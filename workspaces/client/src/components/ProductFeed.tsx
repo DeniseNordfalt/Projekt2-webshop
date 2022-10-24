@@ -2,7 +2,7 @@ import { ProductItem } from "@project-webbshop/shared";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getProducts } from "../api";
+import { getProducts, seachForProducts } from "../api";
 import ProductCard from "./ProductCard";
 import { decode } from "base-64";
 import CategoryList from "./CategoryList";
@@ -25,6 +25,7 @@ const ProductFeed = (props: Props) => {
   useEffect(() => {
     fetchData();
   }, []);
+  
   const uniqueCatagories: string[] = [];
   productList.forEach((item) => {
     if (!uniqueCatagories.includes(item.category) && item.category) {
@@ -32,18 +33,19 @@ const ProductFeed = (props: Props) => {
     }
   });
 
+  const filterFeedOnSearch = async (searchTerm: string) => {
+    const res = await seachForProducts(searchTerm)
+    setProductList(res)
+    console.log(res)
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <aside style={{marginLeft: "10px"}}>
-        <SearchBar />
+        <SearchBar filterFeedOnSearch={filterFeedOnSearch}/>
         <CategoryList data={uniqueCatagories} />
       </aside>
       <StyledList>
-        <>
-          {console.log(
-            productList.filter((product) => product.category === category)
-          )}
-        </>
         {category
           ? productList
               .filter((product) => product.category === category)
