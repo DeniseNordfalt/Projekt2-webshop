@@ -33,11 +33,8 @@ export default function Header({}: Props) {
   return (
     <s.Container>
       <s.Logo>
-        <Link to={"/"}>LOGO</Link>
+        <Link to={"/"}>WEBSHOP</Link>
       </s.Logo>
-      <s.Nav>
-        <s.NavItem href="/">Home</s.NavItem>
-      </s.Nav>
 
       {user ? (
         <s.User>
