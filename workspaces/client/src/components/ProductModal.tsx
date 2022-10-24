@@ -42,13 +42,13 @@ const StyledForm = styled.form`
 `;
 
 type Props = {
-  setVisibility: Dispatch<SetStateAction<boolean>>;
-  data: ProductItem | null;
+  data: ProductItem | Partial<ProductItem> | null;
   handleOnSubmit: (target: any, updateProduct: ProductItem | null) => void;
+  setVisibility: Dispatch<SetStateAction<boolean>>;
 };
 
-const EditProductModal = ({ setVisibility, data, handleOnSubmit }: Props) => {
-  const [updateProduct, setUpdateProduct] = React.useState<ProductItem | null>(
+const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
+  const [updateProduct, setUpdateProduct] = React.useState<ProductItem | Partial<ProductItem> | null>(
     data
   );
 
@@ -62,6 +62,7 @@ const EditProductModal = ({ setVisibility, data, handleOnSubmit }: Props) => {
         type="text"
         id={id}
         name={id}
+        placeholder={id + "..."}
         value={updateProduct?.[id as keyof ProductItem]}
         onChange={(e) =>
           handleOnChange(id as keyof ProductItem, e.target.value)
@@ -74,7 +75,7 @@ const EditProductModal = ({ setVisibility, data, handleOnSubmit }: Props) => {
     <Container>
       <Modal>
         <StyledForm onSubmit={(e) => {e.preventDefault()
-          handleOnSubmit(e.target, updateProduct || null)}} encType="multipart/form-data">
+          handleOnSubmit(e.target, updateProduct as ProductItem || null)}} encType="multipart/form-data">
           {renderInputField("name")}
           {renderInputField("manufacturer")}
           {renderInputField("category")}
@@ -85,10 +86,12 @@ const EditProductModal = ({ setVisibility, data, handleOnSubmit }: Props) => {
           <textarea
             id="description"
             name="description"
+            placeholder="description..."
             value={updateProduct?.description}
             onChange={(e) => handleOnChange("description", e.target.value)}
           />
           <input type="submit" />
+          <button onClick={() => setVisibility(false)}>Cancel</button>
         </StyledForm>
       </Modal>
       <Backdrop />
@@ -96,4 +99,4 @@ const EditProductModal = ({ setVisibility, data, handleOnSubmit }: Props) => {
   );
 };
 
-export default EditProductModal;
+export default ProductModal;

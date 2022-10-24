@@ -5,7 +5,7 @@ import { encode } from "base-64";
 import { editProduct, getProductById } from "../../api";
 import { UserContext } from "../../App";
 import * as s from "./styles";
-import EditProductModal from "../EditProductModal";
+import ProductModal from "../ProductModal";
 
 type Props = {};
 
@@ -39,7 +39,7 @@ const DetailedProduct = (props: Props) => {
     console.log("CLICKED", productId);
   };
 
-  const performProductEdit = (target: any, updateProduct: ProductItem | null): void => {
+  const performProductEdit = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
     const files = target[6].files;
     const formData = new FormData();
     formData.append("name", updateProduct?.name || "");
@@ -107,7 +107,7 @@ const DetailedProduct = (props: Props) => {
                 </s.StyledButton>
               )}
               {isModalVisible && (
-                <EditProductModal
+                <ProductModal
                   data={product}
                   handleOnSubmit={performProductEdit}
                   setVisibility={setIsModalVisible}
