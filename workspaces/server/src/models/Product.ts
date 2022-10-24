@@ -11,6 +11,15 @@ const productSchema = new mongoose.Schema({
   images: [{ type: String, required: true }],
 });
 
+productSchema.index({
+  name: "text",
+  description: "text",
+  category: "text",
+  weight: "text",
+  price: "text",
+  manufacturer: "text",
+});
+
 const Product = mongoose.model<ProductItem>("products", productSchema);
 
 export const loadAllProducts = async (): Promise<ProductItem[]> => {
@@ -72,6 +81,19 @@ export const handleUpdateProduct = async (
 export const handleDeleteProduct = async (id: string): Promise<void> => {
   try {
     await Product.findByIdAndDelete(id);
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
+export const searchProducts = async (
+  search: string
+): Promise<ProductItem[]> => {
+  try {
+    const products = await Product.find({
+      $text: { $search: search },
+    });
+    return products;
   } catch (err) {
     throw new Error(err as string);
   }
