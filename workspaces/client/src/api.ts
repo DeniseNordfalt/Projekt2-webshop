@@ -27,8 +27,8 @@ export const registerUser = async (
   email: string,
   name: string,
   password: string,
-  phone: string,
-  deliveryAdress: string
+  phoneNumber: string,
+  deliveryAddress: object
 ): Promise<UserItem | null> => {
   try {
     return (
@@ -36,8 +36,8 @@ export const registerUser = async (
         email,
         name,
         password,
-        phone,
-        deliveryAdress,
+        phoneNumber,
+        deliveryAddress,
       })
     ).data;
   } catch (err) {
@@ -80,8 +80,8 @@ export const deleteCartItem = async (cartId: string): Promise<void> => {
   await axios.patch("/shoppingcart", { cartId });
 };
 export const purchase = async (): Promise<void> => {
-  await axios.patch("/shoppingcart/purchase")
-}
+  await axios.patch("/shoppingcart/purchase");
+};
 
 export const getOrders = async (): Promise<CartItem[]> => {
   return (await axios.get("/orders")).data;
@@ -95,7 +95,9 @@ export const changeOrderStatus = async (cartId: string): Promise<void> => {
   await axios.patch("/orders/admin", cartId);
 };
 
-export const seachForProducts = async (search: string): Promise<ProductItem[]> => {
-  const res = await axios.get(`/products/search/${search}`)
-  return res.data as ProductItem[]
-}
+export const seachForProducts = async (
+  search: string
+): Promise<ProductItem[]> => {
+  const res = await axios.get(`/products/search/${search}`);
+  return res.data as ProductItem[];
+};
