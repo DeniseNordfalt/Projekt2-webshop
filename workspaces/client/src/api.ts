@@ -24,8 +24,8 @@ export const getProductById = async (id: string): Promise<ProductItem> => {
 };
 
 export const registerUser = async (
-  email: string,
   name: string,
+  email: string,
   password: string,
   phoneNumber: string,
   deliveryAddress: object
@@ -33,8 +33,8 @@ export const registerUser = async (
   try {
     return (
       await axios.post("/users", {
-        email,
         name,
+        email,
         password,
         phoneNumber,
         deliveryAddress,
