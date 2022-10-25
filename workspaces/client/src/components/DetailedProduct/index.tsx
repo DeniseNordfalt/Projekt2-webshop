@@ -37,7 +37,6 @@ const DetailedProduct = (props: Props) => {
   }, [product]);
 
   const handleOnClick = (productId: string) => {
-    console.log(productId)
     addToCart(productId)
   };
 

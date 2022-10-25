@@ -33,7 +33,7 @@ const OrderFeed = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <div>
