@@ -25,6 +25,7 @@ const OrderFeed = () => {
   let data: CartItem[] = [];
     if (user?.roles.includes("admin") && window.location.pathname === "/admin") {
       data = await getAllOrders();
+      console.log("DATA", data)
     } else {
       data = await getOrders();
     }
