@@ -8,14 +8,20 @@ COPY ./workspaces/shared/package*.json ./workspaces/shared/
 
 RUN npm ci -w workspaces/client
 
+RUN ls -l
+COPY . .
+RUN echo $(ls -l)
 COPY ./workspaces/client/ ./workspaces/client/
 COPY ./workspaces/shared/ ./workspaces/shared/
+
 
 ARG APP_WEBSHOP_API
 ENV REACT_APP_SERVER_URL=${APP_WEBSHOP_API}
 
-RUN npm run build -w workspaces/client
+# RUN npm run build  workspaces/client
+
+
 
 EXPOSE 3000
 
-CMD [ "npx", "serve", "workspaces/client/build" ]
+CMD [ "npm", "run", "start", "-w", "workspaces/client" ]
