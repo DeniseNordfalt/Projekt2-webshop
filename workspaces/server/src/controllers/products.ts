@@ -39,6 +39,7 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   const product: ProductItem = req.body;
+  product.images = req.files as Express.Multer.File[] || [];
   try {
     const newProduct = await handleNewProduct(product);
     res.json(newProduct);
@@ -48,14 +49,19 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
-  const product: ProductItem = req.body;
+  const product = req.body;
+  product.images = req.files || [];
   const id = req.params.id;
+  if(product.images.length === 0) {
+    delete product.images;
+  }
   try {
     const updatedProduct = await handleUpdateProduct(id, product);
     res.json(updatedProduct);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
+
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
@@ -69,7 +75,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 
 export const getProductsBySearch = async (req: Request, res: Response) => {
-  console.log(req.params.search);
   const search = req.params.search;
   try {
     const products = await searchProducts(search);
@@ -83,3 +88,4 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
     res.status(500).json({ error: err.message });
   }
 };
+
