@@ -85,13 +85,13 @@ const CartCard = ({data, fetchData}: Props) => {
   return (
     <Container key={data._id}>
 
-      <Thumbnail src={data.images[0]} />
+      {/* <Thumbnail src={data.images[0]} />
       <TextWrapper>
         <h3 style={{margin: "10px"}}>{data.product}</h3>
         <p style={{margin: "10px"}}>{data.price}</p>
         <StyledButton onClick={(e) => removeCartItem(data._id as string)}>remove</StyledButton>
         
-      </TextWrapper>
+      </TextWrapper> */}
       
       
       

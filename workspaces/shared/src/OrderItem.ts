@@ -7,13 +7,21 @@ type OrderProduct = {
     quantity: number
 }
 
+type Adress = {
+    streetName: string;
+    streetNumber: number;
+    county: string;
+    postalCode: number;
+  };
+  
+
 export interface OrderItem {
     _id: string
     userId: string
     paid: boolean
     shippingCost: string
     totalCost: string
-    deliveryAddress: string
+    deliveryAddress: Adress
     status: "registrerad" | "behandlas" | "under leverans" | "levererad"
     products: OrderProduct[]
     createdAt: string

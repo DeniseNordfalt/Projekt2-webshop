@@ -1,6 +1,5 @@
-import { CartItem } from "@project-webbshop/shared";
+import { CartItem, OrderItem } from "@project-webbshop/shared";
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getAllOrders, getOrders } from "../api";
 import { UserContext } from "../App";
@@ -18,14 +17,13 @@ const StyledList = styled.div`
 `;
 
 const OrderFeed = () => {
-  const [orderList, setOrderList] = useState<CartItem[]>([]);
+  const [orderList, setOrderList] = useState<OrderItem[]>([]);
   const { user } = useContext(UserContext);
   
   const fetchData = async () => {
-  let data: CartItem[] = [];
+  let data: OrderItem[] = [];
     if (user?.roles.includes("admin") && window.location.pathname === "/admin") {
       data = await getAllOrders();
-      console.log("DATA", data)
     } else {
       data = await getOrders();
     }
@@ -39,8 +37,8 @@ const OrderFeed = () => {
   return (
     <div>
       <StyledList>
-        {orderList.map((orderList) => {
-          return <OrderCard data={orderList} key={orderList._id} />;
+        {orderList.map((order) => {
+          return <OrderCard data={order} key={order._id}/>;
         })}
       </StyledList>
       <div></div>

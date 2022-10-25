@@ -1,5 +1,5 @@
 import { ProductItem } from "@project-webbshop/shared";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { addNewProduct, getProducts, seachForProducts } from "../api";
@@ -8,16 +8,19 @@ import { decode } from "base-64";
 import CategoryList from "./CategoryList";
 import SearchBar from "./SearchBar";
 import ProductModal from "./ProductModal";
+import { UserContext } from "../App";
 
 const StyledList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 `;
 type Props = {};
 
 const ProductFeed = (props: Props) => {
   const [productList, setProductList] = useState<ProductItem[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const { user } = useContext(UserContext);
   const category = decode(useParams().category || "");
 
   const fetchData = async () => {
@@ -40,13 +43,19 @@ const ProductFeed = (props: Props) => {
     setProductList(res);
   };
 
-  const handleNewProduct = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
+  const handleNewProduct = (
+    target: any,
+    updateProduct: ProductItem | Partial<ProductItem> | null
+  ): void => {
     const files = target[5].files;
     const formData = new FormData();
 
     for (const key in updateProduct) {
       if (key !== "images") {
-        formData.append(key, (updateProduct[key as keyof ProductItem] as unknown) as string);
+        formData.append(
+          key,
+          updateProduct[key as keyof ProductItem] as unknown as string
+        );
       } else continue;
     }
     if (files?.length) {
@@ -63,20 +72,44 @@ const ProductFeed = (props: Props) => {
     <div style={{ display: "flex", flexDirection: "row" }}>
       <aside style={{ marginLeft: "10px" }}>
         <SearchBar filterFeedOnSearch={filterFeedOnSearch} />
-        <div onClick={() => {setIsModalVisible(true)}}
-          style={{
-            backgroundColor: "black",
-            color: "white",
-            padding: "15px",
-            textAlign: "center",
-            marginTop: "10px",
-          }}
-        >
-          Add product
-        </div>
-        {isModalVisible && <ProductModal data={{name: "", description: "", weight:"0", price:"", manufacturer:"", category:"", images: []}} handleOnSubmit={handleNewProduct} setVisibility={setIsModalVisible}/>}
+        <>
+          {user && user?.roles?.includes("admin") && (
+            <div
+              onClick={() => {
+                setIsModalVisible(true);
+              }}
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                padding: "15px",
+                textAlign: "center",
+                marginTop: "10px",
+              }}
+            >
+              Add product
+            </div>
+          )}
+        </>
+        {isModalVisible && (
+          <ProductModal
+            data={{
+              name: "",
+              description: "",
+              weight: "0",
+              price: "",
+              manufacturer: "",
+              category: "",
+              images: [],
+            }}
+            handleOnSubmit={handleNewProduct}
+            setVisibility={setIsModalVisible}
+          />
+        )}
         <CategoryList data={uniqueCatagories} />
       </aside>
+      <>
+      {console.log("PRODUCTS", productList)}
+      </>
       <StyledList>
         {category
           ? productList
