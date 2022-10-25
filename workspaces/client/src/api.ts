@@ -20,6 +20,8 @@ export const addToCart = async (productId: string): Promise<void> => {
   await axios.post("/shoppingcart", { productId });
 };
 
+//PRODUCTS
+
 export const getProducts = async (): Promise<ProductItem[]> => {
   return (await axios.get("/products")).data;
 };
@@ -27,6 +29,8 @@ export const getProducts = async (): Promise<ProductItem[]> => {
 export const getProductById = async (id: string): Promise<ProductItem> => {
   return (await axios.get(`/products/id/${id}`)).data;
 };
+
+//USER
 
 export const registerUser = async (
   name: string,
@@ -77,6 +81,27 @@ export const getUser = async (): Promise<UserItem | null> => {
   }
 };
 
+export const editUser = async (
+  name: string,
+  email: string,
+  phoneNumber: string,
+  deliveryAddress: object
+): Promise<UserItem | null> => {
+  try {
+    return (
+      await axios.patch(
+        "/users/me",
+
+        { name, email, phoneNumber, deliveryAddress }
+      )
+    ).data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+//CART
 export const getCart = async (): Promise<CartItem[]> => {
   return (await axios.get("/shoppingcart")).data;
 };
@@ -84,10 +109,12 @@ export const getCart = async (): Promise<CartItem[]> => {
 export const deleteCartItem = async (cartId: string): Promise<void> => {
   await axios.patch("/shoppingcart", { cartId });
 };
+
 export const purchase = async (): Promise<void> => {
   await axios.get("/shoppingcart/purchase");
 };
 
+//ORDERS
 export const getOrders = async (): Promise<CartItem[]> => {
   return (await axios.get("/orders")).data;
 };
@@ -100,6 +127,7 @@ export const changeOrderStatus = async (cartId: string): Promise<void> => {
   await axios.patch("/orders/admin", cartId);
 };
 
+//SEARCH
 export const seachForProducts = async (
   search: string
 ): Promise<ProductItem[]> => {
