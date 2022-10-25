@@ -11,9 +11,7 @@ const ShoppingCart = new mongoose.Schema({
     weight: { type: String, required: true },
     price: { type: String, required: true },
     manufacturer: { type: String, required: true },
-    images: [
-        { type: String, required: true }
-    ],
+    images: { type: Array, required: true, default: [] },
     paid: { type: Boolean, default: false, required: true }
 
 })

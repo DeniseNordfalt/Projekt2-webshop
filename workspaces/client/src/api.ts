@@ -114,7 +114,13 @@ export const purchase = async (): Promise<void> => {
   await axios.get("/shoppingcart/purchase");
 };
 
+
 //ORDERS
+
+export const editProduct = async (id: string, form: FormData) => {
+  await axios.patch(`products/id/${id}`, form);
+}
+
 export const getOrders = async (): Promise<CartItem[]> => {
   return (await axios.get("/orders")).data;
 };
@@ -127,10 +133,13 @@ export const changeOrderStatus = async (cartId: string): Promise<void> => {
   await axios.patch("/orders/admin", cartId);
 };
 
-//SEARCH
-export const seachForProducts = async (
-  search: string
-): Promise<ProductItem[]> => {
-  const res = await axios.get(`/products/search/${search}`);
-  return res.data as ProductItem[];
-};
+
+export const seachForProducts = async (search: string): Promise<ProductItem[]> => {
+  const res = await axios.get(`/products/search/${search}`)
+  return res.data as ProductItem[]
+}
+
+export const addNewProduct = async (form: any): Promise<void> => {
+  await axios.post("/products", form );
+}
+
