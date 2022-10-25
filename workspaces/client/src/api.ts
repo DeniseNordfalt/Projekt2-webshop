@@ -1,7 +1,7 @@
 import { ProductItem } from "@project-webbshop/shared";
 import { UserItem } from "@project-webbshop/shared";
 import { CartItem } from "@project-webbshop/shared";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 axios.interceptors.request.use((config) => {
@@ -72,9 +72,9 @@ export const logoutUser = async (): Promise<void> => {
   localStorage.removeItem("access_token");
 };
 
-export const getUser = async (): Promise<UserItem | null> => {
+export const getUser = async (): Promise<AxiosResponse | any> => {
   try {
-    return (await axios.get("/users/me")).data;
+    return await axios.get("/users/me");
   } catch (err) {
     console.error(err);
     return null;
