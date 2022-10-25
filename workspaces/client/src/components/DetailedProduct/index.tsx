@@ -37,11 +37,13 @@ const DetailedProduct = (props: Props) => {
   }, [product]);
 
   const handleOnClick = (productId: string) => {
-    console.log(productId)
-    addToCart(productId)
+    addToCart(productId);
   };
 
-  const performProductEdit = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
+  const performProductEdit = (
+    target: any,
+    updateProduct: ProductItem | Partial<ProductItem> | null
+  ): void => {
     const files = target[5].files;
     const formData = new FormData();
     formData.append("name", updateProduct?.name || "");
@@ -99,7 +101,9 @@ const DetailedProduct = (props: Props) => {
                 <p>{product.weight}</p>
               </div>
               <p>{product.description}</p>
-              <s.StyledButton onClick={(e) => handleOnClick(product._id as string)}>
+              <s.StyledButton
+                onClick={(e) => handleOnClick(product._id as string)}
+              >
                 Add to cart
               </s.StyledButton>
               <br />
