@@ -62,3 +62,26 @@ export const TextItemValue = styled.p`
   font-weight: 400;
   margin: 0;
 `;
+
+export const Separator = styled.hr`
+  border: 1px solid black;
+  margin: 1rem 0;
+`;
+
+export const Button = styled.button`
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 2px 2px 2px lightgray;
+  }
+`;

@@ -71,7 +71,6 @@ export default function RegisterUser() {
 
   return (
     <Container>
-      <div>RegisterUser</div>
       <h3>Register</h3>
       <StyledForm onSubmit={handleRegister}>
         <label>Name</label>

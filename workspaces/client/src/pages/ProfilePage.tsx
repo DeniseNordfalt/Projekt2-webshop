@@ -1,28 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
-import ProfileCard from "../components/ProfileCard.tsx";
+import ProfileCard from "../components/ProfileCard";
+import EditUser from "../components/EditUser";
 
 type Props = {};
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: aliceblue;
-  max-width: 50%;
-  margin: 2rem auto;
-  padding: 10px;
-  height: auto;
-  border-radius: 15px;
-`;
-
 export default function ProfilePage({}: Props) {
+  const [edit, setEdit] = useState(false);
+
   return (
-    <div>
-      <ProfileCard />
-    </div>
+    <>
+      {!edit ? (
+        <>
+          <ProfileCard />
+          <button onClick={() => setEdit(true)}> Edit Profile </button>
+        </>
+      ) : (
+        <EditUser />
+      )}
+    </>
   );
 }
