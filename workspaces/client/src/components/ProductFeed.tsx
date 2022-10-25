@@ -36,17 +36,28 @@ const ProductFeed = (props: Props) => {
   });
 
   const filterFeedOnSearch = async (searchTerm: string) => {
-    const res = await seachForProducts(searchTerm);
-    setProductList(res);
+    if (searchTerm !== "") {
+      const res = await seachForProducts(searchTerm);
+
+      if (res && res.length > 0) {
+        setProductList(res);
+      }
+    }
   };
 
-  const handleNewProduct = (target: any, updateProduct: ProductItem | Partial<ProductItem> | null): void => {
+  const handleNewProduct = (
+    target: any,
+    updateProduct: ProductItem | Partial<ProductItem> | null
+  ): void => {
     const files = target[5].files;
     const formData = new FormData();
 
     for (const key in updateProduct) {
       if (key !== "images") {
-        formData.append(key, (updateProduct[key as keyof ProductItem] as unknown) as string);
+        formData.append(
+          key,
+          updateProduct[key as keyof ProductItem] as unknown as string
+        );
       } else continue;
     }
     if (files?.length) {
@@ -63,7 +74,10 @@ const ProductFeed = (props: Props) => {
     <div style={{ display: "flex", flexDirection: "row" }}>
       <aside style={{ marginLeft: "10px" }}>
         <SearchBar filterFeedOnSearch={filterFeedOnSearch} />
-        <div onClick={() => {setIsModalVisible(true)}}
+        <div
+          onClick={() => {
+            setIsModalVisible(true);
+          }}
           style={{
             backgroundColor: "black",
             color: "white",
@@ -74,7 +88,21 @@ const ProductFeed = (props: Props) => {
         >
           Add product
         </div>
-        {isModalVisible && <ProductModal data={{name: "", description: "", weight:"0", price:"", manufacturer:"", category:"", images: []}} handleOnSubmit={handleNewProduct} setVisibility={setIsModalVisible}/>}
+        {isModalVisible && (
+          <ProductModal
+            data={{
+              name: "",
+              description: "",
+              weight: "0",
+              price: "",
+              manufacturer: "",
+              category: "",
+              images: [],
+            }}
+            handleOnSubmit={handleNewProduct}
+            setVisibility={setIsModalVisible}
+          />
+        )}
         <CategoryList data={uniqueCatagories} />
       </aside>
       <StyledList>
