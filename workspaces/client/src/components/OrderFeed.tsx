@@ -38,7 +38,7 @@ const OrderFeed = () => {
     <div>
       <StyledList>
         {orderList.map((order) => {
-          return <OrderCard data={order} key={order._id}/>;
+          return <OrderCard data={order} key={order._id} isAdmin={user?.roles.includes("admin") && window.location.pathname === "/admin" ? true : false}/>;
         })}
       </StyledList>
       <div></div>

@@ -11,9 +11,10 @@ const TextWrapper = styled.div`
 
 type Props = {
   data: OrderItem;
+  isAdmin: boolean;
 };
 
-const OrderCard = ({ data }: Props) => {
+const OrderCard = ({ data, isAdmin }: Props) => {
   const renderImage = (imageName: string): string => {
     return `http://localhost:8800/uploads/${imageName}`;
   };
@@ -33,25 +34,24 @@ const OrderCard = ({ data }: Props) => {
         </option>
     });
   };
-
   return (
     <s.Container>
       <h3>
         Order: {data.createdAt.replace(/(\W+|[A-Z]+)/gi, "") + data.userId}
       </h3>
-      <h3>Customer</h3>
+      {isAdmin && <h3>Customer</h3>}
       <ul>
-        <li>Customer: {data.userId}</li>
+        <li>Customer id: {data.userId}</li>
         <li>Address: {deliveryAdress}</li>
         <li>
           Status: {data.status}
         </li>
-        <li>Update status: <form onSubmit={handleOnSubmit}>
+        {isAdmin && <li>Update status: <form onSubmit={handleOnSubmit}>
             <select id="status" name="status" defaultValue={data.status}>
             {renderStatusOptions()}
             </select>
             <input type="submit" value="Submit" />
-          </form></li>
+          </form></li>}
       </ul>
       <s.ProductList>
         {data.products.map((product, index) => {
