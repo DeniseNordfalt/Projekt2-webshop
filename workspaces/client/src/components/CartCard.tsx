@@ -72,7 +72,9 @@ const CartCard = ({ item, deleteProduct }: Props) => {
         <h3 style={{ margin: "10px" }}>{item.name}</h3>
         <p>Qty: {item.quantity}</p>
         <p style={{ margin: "10px" }}>{item.price}</p>
+        <p>{(item as any).totalCost}</p>
         <StyledButton onClick={(e) => deleteProduct(item._id as string)}>
+
           remove
         </StyledButton>
       </TextWrapper>
