@@ -91,6 +91,7 @@ export default function EditUser({}: Props) {
           id="name"
           value={formData.name}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="email">Email</label>
@@ -100,6 +101,7 @@ export default function EditUser({}: Props) {
           id="email"
           value={formData.email}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="phoneNumber">Phone number</label>
@@ -109,6 +111,7 @@ export default function EditUser({}: Props) {
           id="phoneNumber"
           value={formData.phoneNumber}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="streetName">Street name</label>
@@ -120,6 +123,7 @@ export default function EditUser({}: Props) {
           onChange={(e) => {
             setAdressData({ ...adressData, [e.target.name]: e.target.value });
           }}
+          required
         />
 
         <label htmlFor="streetNumber">Street number</label>
@@ -131,6 +135,7 @@ export default function EditUser({}: Props) {
           onChange={(e) => {
             setAdressData({ ...adressData, [e.target.name]: e.target.value });
           }}
+          required
         />
 
         <label htmlFor="county">County</label>
@@ -142,6 +147,7 @@ export default function EditUser({}: Props) {
           onChange={(e) =>
             setAdressData({ ...adressData, [e.target.name]: e.target.value })
           }
+          required
         />
 
         <label htmlFor="postalCode">Postal code</label>
@@ -153,6 +159,7 @@ export default function EditUser({}: Props) {
           onChange={(e) =>
             setAdressData({ ...adressData, [e.target.name]: e.target.value })
           }
+          required
         />
 
         <StyledButton type="submit">Update</StyledButton>

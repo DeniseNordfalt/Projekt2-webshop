@@ -78,12 +78,14 @@ export default function RegisterUser() {
           type="text"
           name="name"
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
         />
         <label>Email</label>
         <input
           type="text"
           name="email"
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
         />
         <label>Password</label>
         <input
@@ -92,6 +94,7 @@ export default function RegisterUser() {
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
           }
+          required
         />
 
         <label>Phone number</label>
@@ -116,6 +119,7 @@ export default function RegisterUser() {
               },
             })
           }
+          required
         />
 
         <label>Street number</label>
@@ -131,6 +135,7 @@ export default function RegisterUser() {
               },
             })
           }
+          required
         />
 
         <label>County</label>
@@ -146,6 +151,7 @@ export default function RegisterUser() {
               },
             })
           }
+          required
         />
 
         <label>Postal code</label>
@@ -161,6 +167,7 @@ export default function RegisterUser() {
               },
             })
           }
+          required
         />
 
         <StyledButton type="submit">Register</StyledButton>
