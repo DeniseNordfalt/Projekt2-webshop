@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as s from "./styles";
 
 import { getUser } from "../../../api";
@@ -9,6 +9,7 @@ import { UserContext } from "../../../App";
 type Props = {};
 
 export default function Header({}: Props) {
+  const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext);
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -38,6 +39,8 @@ export default function Header({}: Props) {
   const logout = () => {
     localStorage.removeItem("access_token");
     setUser(null);
+    navigate("/")
+
   };
   return (
     <s.Container>

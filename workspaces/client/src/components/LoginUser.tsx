@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { loginUser } from "../api";
@@ -48,6 +49,7 @@ const StyledButton = styled.button`
 type Props = {};
 
 export const LoginUser = (props: Props) => {
+  const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext);
 
   const [email, setemail] = useState("");
@@ -57,6 +59,8 @@ export const LoginUser = (props: Props) => {
     e.preventDefault();
     const data = await loginUser(email, password);
     setUser(data);
+    navigate("/")
+
   };
 
   return (
