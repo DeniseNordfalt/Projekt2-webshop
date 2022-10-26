@@ -43,6 +43,11 @@ const StyledButton = styled.button`
     transition-duration: 0.4s;
     cursor: pointer;
   }
+
+  &.disabled {
+    background: grey;
+    pointer-events: none;
+  }
 `;
 
 const CartFeed = () => {
@@ -55,13 +60,11 @@ const CartFeed = () => {
    }, 0 )
 
   const createPurchase = async () => {
-    
    await makePurchase({
       ...cart,
       shippingCost: "79 kr",
       deliveryAddress: user?.deliveryAddress,
     } as CartItem);
-    fetchData()
   };
 
   const fetchData = async () => {
@@ -95,7 +98,7 @@ const CartFeed = () => {
       <DivFixed>
          { <h3>Total: { `${totalCost? totalCost: 0} kr`}  </h3> }
 
-        <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
+        <StyledButton className={(cart?.products || []).length > 0 ? "" : "disabled"} onClick={(e) => createPurchase()}>Purchase</StyledButton>
       </DivFixed>
     </>
   );
