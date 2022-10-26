@@ -72,7 +72,7 @@ const DetailedProduct = (props: Props) => {
           </p>
 
           <h2 style={{ textAlign: "center" }}>{product.name}</h2>
-          <p style={{ textAlign: "center" }}>{product.manufacturer}</p>
+         
           <s.ProductInfoWrapper>
             <div style={{ width: "100%" }}>
               {currentImage && (
@@ -97,10 +97,15 @@ const DetailedProduct = (props: Props) => {
             </div>
             <s.InfoContainer>
               <div>
-                <p style={{ fontSize: "20px" }}>{product.price}</p>
-                <p>{product.weight}</p>
+              <s.Lable>Price:</s.Lable>
+                <p >{product.price}kr</p>
+                <s.Lable>Weight:</s.Lable>
+                <p> {product.weight}kg</p>
+                <s.Lable>Manufacturer: </s.Lable>
+                <p > {product.manufacturer}</p>
               </div>
-              <p>{product.description}</p>
+              <s.Lable>Description:</s.Lable>
+              <p> {product.description}</p>
               <s.StyledButton
                 onClick={(e) => handleOnClick(product._id as string)}
               >
