@@ -105,8 +105,8 @@ export const getCart = async (): Promise<CartItem> => {
   return (await axios.get("/shoppingcart")).data;
 };
 
-export const deleteCartItem = async (cartId: string, changeQuantity: number): Promise<void> => {
-  await axios.patch("/shoppingcart", { cartId, changeQuantity });
+export const deleteCartItem = async (productId: string, changeQuantity: number): Promise<void> => {
+  await axios.patch("/shoppingcart", { productId, changeQuantity });
 };
 
 export const purchase = async (): Promise<void> => {

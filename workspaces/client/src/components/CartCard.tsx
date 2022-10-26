@@ -61,8 +61,8 @@ type Props = {
 };
 
 const CartCard = ({ item, fetchData }: Props) => {
-  const removeCartItem = (data: string) => {
-    deleteCartItem(data, -1);
+  const removeCartItem = async (data: string) => {
+    await deleteCartItem(data, -1);
     fetchData();
   };
 
@@ -72,8 +72,7 @@ const CartCard = ({ item, fetchData }: Props) => {
 
   return (
     <Container key={item._id}>
-      <>
-      {console.log(item)}</>
+      
       <Thumbnail src={renderImage(item.images[0].filename)} />
       <TextWrapper>
         <h3 style={{ margin: "10px" }}>{item.name}</h3>

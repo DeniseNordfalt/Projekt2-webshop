@@ -95,7 +95,7 @@ export const deleteCartItem = async (req: JwtRequest<any>, res: Response) => {
   const productId = req.body.productId;
   const user = req.user?.userId as string;
   const changeQuantity = req.body.changeQuantity;
-  console.log("delete", productId, changeQuantity, user);
+
   const cart = await getShoppingCart(user);
 
   const cartProduct = cart?.products;
