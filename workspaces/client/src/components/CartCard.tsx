@@ -27,60 +27,55 @@ const Thumbnail = styled.div`
   background-position: left-center;
   background-size: contain;
   background-repeat: no-repeat;
-  margin: 0;
-  padding: 0;
+  margin:0;
+  padding:0;
 `;
 
 const TextWrapper = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  padding: 10px;
+width:100%;
+height: 20%;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+padding:10px;
 `;
-const StyledButton = styled.button`
-  background: black;
-  color: white;
-  font-size: 18px;
-  width: 100px;
-  margin: 10px;
 
-  border: none;
-  padding: 15px;
-  &:hover {
-    background: grey;
-    transition-duration: 0.4s;
-    cursor: pointer;
-  }
-`;
+const StyledButton  = styled.button`
+background:black;
+color: white;
+font-size: 18px;
+width:100px;
+margin:10px;
+border: none;
+padding: 15px;
+&:hover {
+  background:grey;
+  transition-duration: 0.4s;
+  cursor:pointer;
+}
+`
+
 type Props = {
   item: ProductItem;
-  fetchData: Function;
+  deleteProduct: Function;
 };
 
-const CartCard = ({ item, fetchData }: Props) => {
-  const removeCartItem = (data: string) => {
-    deleteCartItem(data, -1);
-    fetchData();
-  };
-
+const CartCard = ({ item, deleteProduct }: Props) => {
   const renderImage = (imageName: string) =>  {
     return `http://localhost:8800/uploads/${imageName}`
   }
 
   return (
-    <Container key={item._id}>
-      <>
-      {console.log(item)}</>
+    <Container key={item.productId}>
       <Thumbnail src={renderImage(item.images[0].filename)} />
       <TextWrapper>
         <h3 style={{ margin: "10px" }}>{item.name}</h3>
+        <p>Qty: {item.quantity}</p>
         <p style={{ margin: "10px" }}>{item.price}</p>
         <p>{item.totalCost}</p>
         <p>{item.quantity}</p>
         <StyledButton onClick={(e) => removeCartItem(item._id as string)}>
+
           remove
         </StyledButton>
       </TextWrapper>
