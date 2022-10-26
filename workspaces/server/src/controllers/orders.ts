@@ -25,7 +25,7 @@ export const handleNewOrder = async (
       for (const item of body[key]) {
         let product: ProductItem | null = null;
         try {
-          product = await loadProductById(item.productId);
+          product = await loadProductById(item._id);
         } catch (err) {
           if (err instanceof Error) {
             console.error(err);
