@@ -8,7 +8,7 @@ const router: Router = express.Router();
 router.get("/", requireLogin, getUserOrders)
 router.post("/", requireLogin, handleNewOrder)
 router.patch("/:id", requireLogin, editOrder)
-router.get("/admin", getAllOrders)
+router.get("/admin", requireLogin, getAllOrders)
 router.patch("/:id/admin", handleOrderStatusChange)
 
 

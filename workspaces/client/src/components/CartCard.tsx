@@ -65,20 +65,13 @@ padding: 15px;
 `
 type Props = {
   item: ProductItem;
-  fetchData: Function
+  deleteProduct: Function;
 };
 
-const CartCard = ({item, fetchData}: Props) => {
-   
-  
-  
-  const removeCartItem = (data: string) => {
-    deleteCartItem(data, -1)
-    
-    fetchData()
-    
-    
-  
+const CartCard = ({ item, deleteProduct }: Props) => {
+
+  const renderImage = (imageName: string) =>  {
+    return `http://localhost:8800/uploads/${imageName}`
   }
 
   
@@ -89,14 +82,13 @@ const CartCard = ({item, fetchData}: Props) => {
       <Thumbnail src={item.images[0]} />
 
       <TextWrapper>
-        <h3 style={{margin: "10px"}}>{item.name}</h3>
-        <p style={{margin: "10px"}}>{item.price}</p>
-        <StyledButton onClick={(e) => removeCartItem(item._id as string)}>remove</StyledButton>
-        
-      </TextWrapper> */}
-      
-      
-      
+        <h3 style={{ margin: "10px" }}>{item.name}</h3>
+        <p>Qty: {item.quantity}</p>
+        <p style={{ margin: "10px" }}>{item.price}</p>
+        <StyledButton onClick={(e) => deleteProduct(item._id as string)}>
+          remove
+        </StyledButton>
+      </TextWrapper>
     </Container>
   )
 }

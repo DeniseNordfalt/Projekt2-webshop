@@ -1,7 +1,7 @@
 import { CartItem, ProductItem } from "@project-webbshop/shared";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { deleteCartItem, getCart, purchase } from "../api";
+import { deleteCartItem, getCart, makePurchase } from "../api";
 
 import CartCard from "./CartCard";
 
@@ -59,23 +59,24 @@ const CartFeed =() => {
 
 
   const createPurchase = () => {
-    purchase();
+    makePurchase(cart as CartItem);
     fetchData();
   };
 
   const fetchData = async () => {
-
-    const data = await getCart()
-    console.log(data)
-    
-    setCart(data)
- 
-  }
+    const data = await getCart();
+    setCart(data);
+  };
 
   useEffect(() => {
     fetchData();
     
   }, []);
+
+  const removeCartItem = (data: string) => {
+    deleteCartItem(data, -1);
+    fetchData();
+  };
 
   return (
     <>
@@ -83,8 +84,7 @@ const CartFeed =() => {
     
       <StyledList >
         {cart?.products.map((item: any) => {
-          return <CartCard fetchData={fetchData} item={item} key={item._id}/>;
-
+          return <CartCard deleteProduct={removeCartItem} item={item} key={item._id} />;
         })}
 
       </StyledList>
@@ -94,7 +94,7 @@ const CartFeed =() => {
      {/* { <h3>Total: { `${totalCost} kr`}  </h3> } */}
 
     <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
-  </DivFixed> */}
+  </DivFixed>
     </>
   );
 };
