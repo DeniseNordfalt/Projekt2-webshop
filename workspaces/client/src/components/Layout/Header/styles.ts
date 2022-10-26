@@ -9,6 +9,8 @@ export const Container = styled.header`
   height: 4rem;
   background-color: #fff;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  max-width: 1500px;
+  margin: 0 auto;
 `;
 
 export const Logo = styled.h1`
@@ -26,7 +28,6 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 20rem;
 `;
 
 export const NavItem = styled.a`
@@ -49,18 +50,12 @@ export const NavItem = styled.a`
 export const User = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 10rem;
-`;
-
-export const UserAvatar = styled.img`
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
+  flex-direction: column;
+  position: relative;
 `;
 
 export const UserName = styled.span`
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #000;
 
@@ -73,10 +68,10 @@ export const UserName = styled.span`
 
 export const UserMenu = styled.div`
   position: absolute;
-  top: 4rem;
-  right: 0;
-  width: 10rem;
-  padding: 1rem;
+  top: 3.1rem;
+
+  width: 8rem;
+  padding: 1rem 0 1rem 1rem;
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);

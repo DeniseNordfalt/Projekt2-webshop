@@ -17,13 +17,17 @@ import {
 
 export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const user = req.user?.userId;
+  const totalPrice = (price: string, quantity: number): string => {
+    const total = parseInt(price.replace(/\D+/g, "")) * quantity
+    return `${total} kr`
+  }
 
   try {
     const cart = await getShoppingCart(user) as any;
     let products = []
     for (const item of cart.products) {
 
-      products.push({ ...(await loadProductById(item.productId) as any)?.toObject(), quantity: item.quantity })
+      products.push({ ...(await loadProductById(item.productId) as any)?.toObject(), quantity: item.quantity, totalPrice: totalPrice(item.price, item.quantity) })
 
     }
 

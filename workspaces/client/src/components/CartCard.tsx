@@ -1,30 +1,26 @@
-import { CartItem, ProductItem } from '@project-webbshop/shared';
-import React from 'react'
-import styled from 'styled-components';
-import { deleteCartItem } from '../api';
-import CartFeed from './CartFeed';
-
+import { CartItem, ProductItem } from "@project-webbshop/shared";
+import { CartProduct } from "@project-webbshop/shared/src/CartItem";
+import React from "react";
+import styled from "styled-components";
+import { deleteCartItem } from "../api";
+import CartFeed from "./CartFeed";
 
 const Container = styled.div`
   width: 50%;
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
   min-height: 200px;
   overflow-y: none;
-  margin: 10px; 
+  margin: 10px;
   padding: 10px;
   border: 1px solid black;
- 
 `;
-
-
 
 type ThemeProps = {
   src?: string;
 };
 
 const Thumbnail = styled.div`
-  
   width: 40%;
   height: 75%;
   background-image: ${(props: ThemeProps) => `url(${props.src})`};
@@ -69,7 +65,6 @@ const CartCard = ({ item, deleteProduct }: Props) => {
     return `http://localhost:8800/uploads/${imageName}`
   }
 
-  
   return (
     <Container key={item.productId}>
       <Thumbnail src={renderImage(item.images[0].filename)} />
@@ -82,7 +77,7 @@ const CartCard = ({ item, deleteProduct }: Props) => {
         </StyledButton>
       </TextWrapper>
     </Container>
-  )
-}
+  );
+};
 
-export default CartCard
+export default CartCard;
