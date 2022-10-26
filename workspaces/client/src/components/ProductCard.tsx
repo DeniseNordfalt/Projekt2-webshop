@@ -69,7 +69,7 @@ type Props = {
   data: ProductItem;
 };
 const handleOnClick = (productId: string) => {
-  addToCart(productId)
+  addToCart(productId, 1)
 }
 
 const ProductCard = ({ data }: Props) => {

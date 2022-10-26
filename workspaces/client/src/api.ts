@@ -15,8 +15,8 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-export const addToCart = async (productId: string): Promise<void> => {
-  await axios.post("/shoppingcart", { productId });
+export const addToCart = async (productId: string, changeQuantity: number): Promise<void> => {
+  await axios.post("/shoppingcart", { productId, changeQuantity });
 };
 
 //PRODUCTS

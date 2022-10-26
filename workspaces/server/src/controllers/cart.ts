@@ -1,17 +1,17 @@
-import { TokenPayload, UserItem } from "@project-webbshop/shared";
-import { NextFunction, Request, Response } from "express";
-import { serialize } from "v8";
+import { ProductItem, TokenPayload, UserItem } from "@project-webbshop/shared";
+import { Response } from "express";
+
 import { JwtRequest } from "../app";
 import { loadProductById } from "../models/Product";
+
 import {
 
-  changeCartStatus,
-  createPurchase,
+  addProductToCart,
   createShoppingCart,
-  deleteAllCart,
-  deleteShoppingCartItem,
+  deleteProductFromCart,
   getAllCarts,
   getShoppingCart,
+  updateQuantityInCart,
 } from "../models/ShoppingCart";
 
 export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
@@ -19,8 +19,18 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
 
 
   try {
-    const cart = await getShoppingCart(user);
-    res.json(cart);
+    const cart = await getShoppingCart(user) as any;
+    let products = []
+    for (const item of cart.products) {
+
+      products.push({ ...(await loadProductById(item.productId) as any)?.toObject(), quantity: item.quantity })
+
+    }
+
+
+
+
+    res.json({ ...cart.toObject(), products });
   } catch (err) {
     console.error("ERR", err);
     res.status(400).json({ error: "Cant load shoppingcart" });
@@ -34,10 +44,10 @@ export const createCart = async (req: JwtRequest<any>, res: Response) => {
   const user = req.user?.userId as string;
   const cart = await getShoppingCart(user)
 
-  const cartProduct = cart?.products
+  const cartProduct = cart?.products || []
   const changeQuantity = req.body.changeQuantity
 
-  const productExistsInCart = cartProduct?.find(item => item.productId === req.body.productId)
+  const productExistsInCart = cartProduct?.find(item => item?.productId === req.body.productId)
 
   try {
 
