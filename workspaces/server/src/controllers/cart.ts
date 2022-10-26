@@ -4,20 +4,19 @@ import { serialize } from "v8";
 import { JwtRequest } from "../app";
 import { loadProductById } from "../models/Product";
 import {
-  addProductToCart,
 
+  changeCartStatus,
+  createPurchase,
   createShoppingCart,
-
-  deleteProductFromCart,
-
+  deleteAllCart,
+  deleteShoppingCartItem,
   getAllCarts,
   getShoppingCart,
-
-  updateQuantityInCart,
 } from "../models/ShoppingCart";
 
 export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const user = req.user?.userId;
+
 
   try {
     const cart = await getShoppingCart(user);
@@ -27,6 +26,7 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
     res.status(400).json({ error: "Cant load shoppingcart" });
   }
 };
+
 
 
 
@@ -126,6 +126,7 @@ export const getAllCartItems = async (req: JwtRequest<any>, res: Response) => {
       console.error(err);
       res.status(404).json({ message: err });
     }
+
   } else {
     res.status(401).json("Unauthorized");
   }

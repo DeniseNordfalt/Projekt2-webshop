@@ -17,8 +17,17 @@ export default function Header({}: Props) {
   };
 
   const fetchUser = async () => {
-    const data = await getUser();
-    setUser(data);
+    const token = localStorage.getItem("access_token");
+
+    if (token) {
+      const response = await getUser();
+
+      if (response.status === 200) {
+        setUser(response.data);
+      } else if (response.status === 401) {
+        localStorage.removeItem("access_token");
+      }
+    }
   };
 
   useEffect(() => {

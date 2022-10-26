@@ -42,14 +42,14 @@ function App() {
           <Route path="/:category" element={<Home />} />
 
           <Route path="/admin" element={<Admin />} />
-          <Route path="*" element={<NotFound />} />
 
           <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/shoppingcart" element={<CartPage />} />
           <Route path="/orders" element={<OrderPage />} />
           <Route path="/me" element={<ProfilePage />} />
-          
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </UserContext.Provider>
