@@ -15,6 +15,21 @@ const StyledList = styled.ul`
   flex-wrap: wrap;
   width: 100%;
 `;
+const StyledButton = styled.button`
+  background: black;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  height: auto;
+  border: none;
+  margin: 6px;
+  padding: 15px;
+  &:hover {
+    background: grey;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+`;
 type Props = {};
 
 const ProductFeed = (props: Props) => {
@@ -53,10 +68,10 @@ const ProductFeed = (props: Props) => {
     }
   };
 
-  const handleNewProduct = (
+  const handleNewProduct = async (
     target: any,
     updateProduct: ProductItem | Partial<ProductItem> | null
-  ): void => {
+  ): Promise<void> => {
     const files = target[5].files;
     const formData = new FormData();
 
@@ -73,9 +88,10 @@ const ProductFeed = (props: Props) => {
         formData.append("files", files[key]);
       }
     }
-    addNewProduct(formData);
+    await addNewProduct(formData);
     fetchData();
     setIsModalVisible(false);
+    window.location.reload();
   };
 
   return (
@@ -84,20 +100,13 @@ const ProductFeed = (props: Props) => {
         <SearchBar filterFeedOnSearch={filterFeedOnSearch} />
         <>
           {user && user?.roles?.includes("admin") && (
-            <div
+            <StyledButton
               onClick={() => {
                 setIsModalVisible(true);
               }}
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                padding: "15px",
-                textAlign: "center",
-                marginTop: "10px",
-              }}
             >
               Add product
-            </div>
+            </StyledButton>
           )}
         </>
         {isModalVisible && (

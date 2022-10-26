@@ -66,7 +66,7 @@ export const createCart = async (req: JwtRequest<any>, res: Response) => {
           },
         ],
       };
-      console.log(cartItem);
+
       await createShoppingCart(cartItem);
       res.json({ message: "new cart added" });
     } else if ((cart as any) && productExistsInCart) {
@@ -99,7 +99,7 @@ export const deleteCartItem = async (req: JwtRequest<any>, res: Response) => {
   const cartProductReferences = cart?.products;
 
   const productExistsInCart = (cartProductReferences as CartProduct[]).filter(item => item.productId == productId)
-  console.log(productExistsInCart)
+
 
 
   try {

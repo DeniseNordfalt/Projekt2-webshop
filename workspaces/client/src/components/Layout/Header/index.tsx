@@ -22,7 +22,7 @@ export default function Header({}: Props) {
 
     if (token) {
       const response = await getUser();
-      console.log(user);
+      
 
       if (response.status === 200) {
         setUser(response.data);

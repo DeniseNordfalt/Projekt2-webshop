@@ -57,9 +57,9 @@ const OrderCard = ({ data, isAdmin }: Props) => {
       <s.ProductList>
         {data.products.map((product, index) => {
           return (
-            <s.ProductList key={index}>
+            <s.ProductItem key={index}>
               <s.ProductInfo>
-                <s.Thumbnail src={renderImage(data.products[0].image)} />
+                <s.Thumbnail src={renderImage(product.image)} />
                 <h5>
                   {product.manufacturer} - {product.name}
                 </h5>
@@ -74,7 +74,7 @@ const OrderCard = ({ data, isAdmin }: Props) => {
                     " kr"}
                 </span>
               </s.PricingContainer>
-            </s.ProductList>
+            </s.ProductItem>
           );
         })}
       </s.ProductList>

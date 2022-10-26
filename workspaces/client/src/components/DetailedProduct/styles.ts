@@ -12,6 +12,10 @@ const ProductInfoWrapper = styled.div`
   }
 `;
 
+const Lable = styled.label`
+  font-weight: bold;
+`
+
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,4 +52,5 @@ const InfoContainer = styled.div`
     Thumbnails,
     InfoContainer,
     ProductInfoWrapper,
+    Lable
   }
