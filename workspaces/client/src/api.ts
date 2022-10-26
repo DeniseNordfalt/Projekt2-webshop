@@ -1,4 +1,4 @@
-import { ProductItem } from "@project-webbshop/shared";
+import { OrderItem, ProductItem } from "@project-webbshop/shared";
 import { UserItem } from "@project-webbshop/shared";
 import { CartItem } from "@project-webbshop/shared";
 import axios, { AxiosResponse } from "axios";
@@ -119,12 +119,12 @@ export const editProduct = async (id: string, form: FormData) => {
   await axios.patch(`products/id/${id}`, form);
 };
 
-export const getOrders = async (): Promise<CartItem[]> => {
-  return (await axios.get("/orders")).data;
+export const getOrders = async (): Promise<OrderItem[]> => {
+  return (await axios.get("/orders")).data as unknown as OrderItem[];
 };
 
-export const getAllOrders = async (): Promise<CartItem[]> => {
-  return (await axios.get("/orders/admin")).data;
+export const getAllOrders = async (): Promise<OrderItem[]> => {
+  return (await axios.get("/orders/admin")).data as unknown as OrderItem[];
 };
 
 export const changeOrderStatus = async (cartId: string): Promise<void> => {
@@ -139,5 +139,9 @@ export const seachForProducts = async (
 };
 
 export const addNewProduct = async (form: any): Promise<void> => {
-  await axios.post("/products", form);
-};
+  await axios.post("/products", form );
+}
+
+export const updateOrderStatus = async (cartId: string, status: string): Promise<any> => {
+  return (await axios.patch(`/orders/${cartId}/admin`, {status})).data;
+}

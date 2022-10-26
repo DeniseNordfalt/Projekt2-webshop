@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, useRouteLoaderData } from "react-router-dom";
 import { UserContext } from "../App";
 import { editUser } from "../api";
 
@@ -51,28 +50,29 @@ type Props = {};
 export default function EditUser({}: Props) {
   const { user } = useContext(UserContext);
 
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: user?.name as string,
     email: user?.email as string,
     phoneNumber: user?.phoneNumber as string,
-    deliveryAddress: {
-      streetName: user?.deliveryAddress?.streetName as string,
-      streetNumber: user?.deliveryAddress?.streetNumber as number,
-      county: user?.deliveryAddress?.county as string,
-      postalCode: user?.deliveryAddress?.postalCode as number,
-    },
+  });
+
+  const [adressData, setAdressData] = useState({
+    streetName: user?.deliveryAddress?.streetName as string,
+    streetNumber: user?.deliveryAddress?.streetNumber as number,
+    county: user?.deliveryAddress?.county as string,
+    postalCode: user?.deliveryAddress?.postalCode as number,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const data = await editUser(
       formData.name,
       formData.email,
       formData.phoneNumber,
-      formData.deliveryAddress
+      adressData
     );
+
     window.location.reload();
   };
 
@@ -116,8 +116,10 @@ export default function EditUser({}: Props) {
           type="text"
           name="streetName"
           id="streetName"
-          value={formData.deliveryAddress.streetName}
-          onChange={handleChange}
+          value={adressData.streetName}
+          onChange={(e) => {
+            setAdressData({ ...adressData, [e.target.name]: e.target.value });
+          }}
         />
 
         <label htmlFor="streetNumber">Street number</label>
@@ -125,8 +127,10 @@ export default function EditUser({}: Props) {
           type="number"
           name="streetNumber"
           id="streetNumber"
-          value={formData.deliveryAddress.streetNumber}
-          onChange={handleChange}
+          value={adressData.streetNumber}
+          onChange={(e) => {
+            setAdressData({ ...adressData, [e.target.name]: e.target.value });
+          }}
         />
 
         <label htmlFor="county">County</label>
@@ -134,8 +138,10 @@ export default function EditUser({}: Props) {
           type="text"
           name="county"
           id="county"
-          value={formData.deliveryAddress.county}
-          onChange={handleChange}
+          value={adressData.county}
+          onChange={(e) =>
+            setAdressData({ ...adressData, [e.target.name]: e.target.value })
+          }
         />
 
         <label htmlFor="postalCode">Postal code</label>
@@ -143,8 +149,10 @@ export default function EditUser({}: Props) {
           type="number"
           name="postalCode"
           id="postalCode"
-          value={formData.deliveryAddress.postalCode}
-          onChange={handleChange}
+          value={adressData.postalCode}
+          onChange={(e) =>
+            setAdressData({ ...adressData, [e.target.name]: e.target.value })
+          }
         />
 
         <StyledButton type="submit">Update</StyledButton>
