@@ -51,7 +51,9 @@ app.use(
         ) as TokenPayload;
       } catch (err) {
         if (err instanceof JsonWebTokenError) {
-          res.status(400).json({ error: err.message });
+          console.error(err);
+          err.message === "Invalid token" &&
+            res.status(400).json({ error: "Invalid token" });
         }
       }
     }
