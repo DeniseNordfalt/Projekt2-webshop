@@ -10,4 +10,5 @@ export interface ProductItem {
     images: any[],
     quantity?: number,
     productId?: string
+    totalPrice?: string
 }
