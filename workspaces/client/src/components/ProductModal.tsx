@@ -27,7 +27,8 @@ const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 300px;
+  min-height: 300px;
+  height: fit-content;
   padding: 15px;
   background-color: white;
   z-index: 105;
@@ -38,6 +39,12 @@ const StyledForm = styled.form`
   margin: auto;
   input {
     width: 90%;
+    border: 1px solid black;
+    outline: none;
+  }
+  textarea {
+    border: 1px solid black;
+    outline: none;
   }
 `;
 
@@ -56,18 +63,19 @@ const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
     setUpdateProduct({ ...updateProduct, [key]: value } as ProductItem);
   };
 
-  const renderInputField = (id: string) => {
+  const renderInputField = (id: string, type?: string) => {
     return (
+      <>
+      <label htmlFor={id}>{id}:</label>
       <input
-        type="text"
+        type={type || "text"}
         id={id}
         name={id}
-        placeholder={id + "..."}
         value={updateProduct?.[id as keyof ProductItem]}
         onChange={(e) =>
           handleOnChange(id as keyof ProductItem, e.target.value)
         }
-      />
+      /></>
     );
   };
 
@@ -79,8 +87,8 @@ const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
           {renderInputField("name")}
           {renderInputField("manufacturer")}
           {renderInputField("category")}
-          {renderInputField("price")}
-          {renderInputField("weight")}
+          {renderInputField("price", "number")}
+          {renderInputField("weight", "number")}
           <input type="file" multiple />
           <textarea
             id="description"

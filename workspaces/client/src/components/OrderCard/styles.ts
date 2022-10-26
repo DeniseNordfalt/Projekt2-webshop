@@ -19,8 +19,7 @@ const Container = styled.div`
 const ProductList = styled.ul`
 box-sizing: border-box;
 display: flex;
-justify-content: space-between;
-align-items: center;
+flex-direction: column;
 list-style: none;
 width: 100%;
 min-height: 100px;
@@ -43,6 +42,9 @@ const Thumbnail = styled.div`
 `;
 
 const ProductItem = styled.li`
+display: flex;
+justify-content: space-between;
+align-items: center;
 margin-bottom: 20px;
 `
 
