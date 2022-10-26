@@ -3,7 +3,6 @@ import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { deleteCartItem, getCart, makePurchase } from "../api";
 import { UserContext } from "../App";
-
 import CartCard from "./CartCard";
 
 type Props = {};
@@ -48,7 +47,7 @@ const StyledButton = styled.button`
 
 const CartFeed = () => {
   const [cart, setCart] = useState<CartItem | null>(null);
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   //  const totalCost = cart.reduce((total: number, item: Partial<CartItem & ProductItem>): number => {
   //     return total + parseInt(item?.price?.replace(/\D+/g, ""))
@@ -56,9 +55,17 @@ const CartFeed = () => {
   //  }, 0 )
 
   const createPurchase = () => {
-    console.log("CART", {...cart, shippingCost: "79 kr", deliveryAddress: user?.deliveryAddress })
-    
-    makePurchase({...cart, shippingCost: "79 kr", deliveryAddress: user?.deliveryAddress } as CartItem);
+    console.log("CART", {
+      ...cart,
+      shippingCost: "79 kr",
+      deliveryAddress: user?.deliveryAddress,
+    });
+
+    makePurchase({
+      ...cart,
+      shippingCost: "79 kr",
+      deliveryAddress: user?.deliveryAddress,
+    } as CartItem);
     fetchData();
   };
 
