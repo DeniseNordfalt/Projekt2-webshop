@@ -86,6 +86,7 @@ const ProductCard = ({ data }: Props) => {
         />
         <TextWrapper>
           <h3 style={{ margin: "10px" }}>{data.name}</h3>
+          <p>Price: {data.price}</p>
         </TextWrapper>
       </ImgText>
       <StyledButton
