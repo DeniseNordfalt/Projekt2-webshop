@@ -78,6 +78,8 @@ const CartCard = ({ item, fetchData }: Props) => {
       <TextWrapper>
         <h3 style={{ margin: "10px" }}>{item.name}</h3>
         <p style={{ margin: "10px" }}>{item.price}</p>
+        <p>{item.totalCost}</p>
+        <p>{item.quantity}</p>
         <StyledButton onClick={(e) => removeCartItem(item._id as string)}>
           remove
         </StyledButton>
