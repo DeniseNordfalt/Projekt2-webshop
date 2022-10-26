@@ -122,6 +122,7 @@ const ProductFeed = (props: Props) => {
         )}
         <CategoryList data={uniqueCatagories} />
       </aside>
+
       <StyledList>
         {category
           ? productList
