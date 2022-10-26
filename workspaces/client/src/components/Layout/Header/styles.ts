@@ -22,6 +22,10 @@ export const Logo = styled.h1`
     text-decoration: none;
     color: #000;
   }
+  &:hover {
+    
+    cursor: pointer;
+  }
 `;
 
 export const Nav = styled.nav`
