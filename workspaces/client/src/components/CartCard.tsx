@@ -66,9 +66,15 @@ const CartCard = ({ item, fetchData }: Props) => {
     fetchData();
   };
 
+  const renderImage = (imageName: string) =>  {
+    return `http://localhost:8800/uploads/${imageName}`
+  }
+
   return (
     <Container key={item._id}>
-      <Thumbnail src={item.images[0]} />
+      <>
+      {console.log(item)}</>
+      <Thumbnail src={renderImage(item.images[0].filename)} />
       <TextWrapper>
         <h3 style={{ margin: "10px" }}>{item.name}</h3>
         <p style={{ margin: "10px" }}>{item.price}</p>
