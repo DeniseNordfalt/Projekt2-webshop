@@ -15,7 +15,7 @@ export const handleNewOrder = async (
   req: JwtRequest<TokenPayload>,
   res: Response
 ) => {
-  const body = req.body;
+  const body = req.body.cart;
   let order: Partial<OrderItem> = {};
   order.userId = req.user?.userId as string;
   order.totalCost = "0";

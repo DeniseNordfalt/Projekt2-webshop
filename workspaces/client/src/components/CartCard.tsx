@@ -33,7 +33,6 @@ const Thumbnail = styled.div`
   background-repeat: no-repeat;
   margin:0;
   padding:0;
-
 `;
 
 const TextWrapper = styled.div`
@@ -42,19 +41,15 @@ height: 20%;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
-
 padding:10px;
-
-
 `;
+
 const StyledButton  = styled.button`
-  
 background:black;
 color: white;
 font-size: 18px;
 width:100px;
 margin:10px;
-
 border: none;
 padding: 15px;
 &:hover {
@@ -63,13 +58,13 @@ padding: 15px;
   cursor:pointer;
 }
 `
+
 type Props = {
   item: ProductItem;
   deleteProduct: Function;
 };
 
 const CartCard = ({ item, deleteProduct }: Props) => {
-
   const renderImage = (imageName: string) =>  {
     return `http://localhost:8800/uploads/${imageName}`
   }
@@ -77,10 +72,7 @@ const CartCard = ({ item, deleteProduct }: Props) => {
   
   return (
     <Container key={item.productId}>
-
-
-      <Thumbnail src={item.images[0]} />
-
+      <Thumbnail src={renderImage(item.images[0].filename)} />
       <TextWrapper>
         <h3 style={{ margin: "10px" }}>{item.name}</h3>
         <p>Qty: {item.quantity}</p>

@@ -110,7 +110,7 @@ export const deleteCartItem = async (productId: string, changeQuantity: number):
 };
 
 export const makePurchase = async (cart: CartItem): Promise<void> => {
-  await axios.post("/order", {cart});
+  await axios.post("/orders", {cart});
 };
 
 //ORDERS

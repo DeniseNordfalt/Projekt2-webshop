@@ -1,7 +1,8 @@
-import { CartItem, ProductItem } from "@project-webbshop/shared";
-import React, { useEffect, useState } from "react";
+import { CartItem } from "@project-webbshop/shared";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { deleteCartItem, getCart, makePurchase } from "../api";
+import { UserContext } from "../App";
 
 import CartCard from "./CartCard";
 
@@ -45,21 +46,19 @@ const StyledButton = styled.button`
   }
 `;
 
-
-const CartFeed =() => {
-  const [cart, setCart] = useState<CartItem | null>(null)
-  
-
+const CartFeed = () => {
+  const [cart, setCart] = useState<CartItem | null>(null);
+  const {user} = useContext(UserContext);
 
   //  const totalCost = cart.reduce((total: number, item: Partial<CartItem & ProductItem>): number => {
-  //     return total + parseInt(item?.price?.replace(/\D+/g, "")) 
-      
+  //     return total + parseInt(item?.price?.replace(/\D+/g, ""))
 
   //  }, 0 )
 
-
   const createPurchase = () => {
-    makePurchase(cart as CartItem);
+    console.log("CART", {...cart, shippingCost: "79 kr", deliveryAddress: user?.deliveryAddress })
+    
+    makePurchase({...cart, shippingCost: "79 kr", deliveryAddress: user?.deliveryAddress } as CartItem);
     fetchData();
   };
 
@@ -70,7 +69,6 @@ const CartFeed =() => {
 
   useEffect(() => {
     fetchData();
-    
   }, []);
 
   const removeCartItem = (data: string) => {
@@ -80,21 +78,23 @@ const CartFeed =() => {
 
   return (
     <>
-
-    
-      <StyledList >
+      <StyledList>
         {cart?.products.map((item: any) => {
-          return <CartCard deleteProduct={removeCartItem} item={item} key={item._id} />;
+          return (
+            <CartCard
+              deleteProduct={removeCartItem}
+              item={item}
+              key={item._id}
+            />
+          );
         })}
-
       </StyledList>
-      
-    
-    <DivFixed>
-     {/* { <h3>Total: { `${totalCost} kr`}  </h3> } */}
 
-    <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
-  </DivFixed>
+      <DivFixed>
+        {/* { <h3>Total: { `${totalCost} kr`}  </h3> } */}
+
+        <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
+      </DivFixed>
     </>
   );
 };
