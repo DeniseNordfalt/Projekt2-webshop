@@ -124,7 +124,7 @@ export const getOrders = async (): Promise<CartItem[]> => {
 };
 
 export const getAllOrders = async (): Promise<CartItem[]> => {
-  return await axios.get("/orders/admin");
+  return (await axios.get("/orders/admin")).data;
 };
 
 export const changeOrderStatus = async (cartId: string): Promise<void> => {

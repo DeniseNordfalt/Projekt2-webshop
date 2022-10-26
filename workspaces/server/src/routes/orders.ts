@@ -1,12 +1,15 @@
 import express, { Router } from 'express';
-import { changeOrderStatus, getAllOrders, getOrders } from '../controllers/orders';
+import { requireLogin } from '../controllers/auth';
+import { getUserOrders, handleNewOrder, editOrder, handleOrderStatusChange } from '../controllers/orders';
 
 
 const router: Router = express.Router();
 
-router.get("/", getOrders)
-router.get("/admin", getAllOrders)
-router.patch("/admin", changeOrderStatus)
+router.get("/", requireLogin, getUserOrders)
+router.post("/", requireLogin, handleNewOrder)
+router.patch("/:id", requireLogin, editOrder)
+// router.get("/admin", getAllOrders)
+router.patch("/:id/admin", handleOrderStatusChange)
 
 
 
