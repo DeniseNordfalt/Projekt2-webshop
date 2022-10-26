@@ -41,7 +41,7 @@ export const addProductToCart = async (userId: string, product: string): Promise
   await ShoppingCart.updateOne({ userId }, { $push: { products: product } })
 }
 export const deleteProductFromCart = async (userId: string, product: string): Promise<void> => {
-  console.log(product)
+
   await ShoppingCart.updateOne({ userId: userId }, { $pull: { products: { productId: [product] } } })
 }
 export const updateQuantityInCart = async (userId: string, reqProduct: string, product: number): Promise<void> => {
