@@ -63,12 +63,12 @@ const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
     setUpdateProduct({ ...updateProduct, [key]: value } as ProductItem);
   };
 
-  const renderInputField = (id: string) => {
+  const renderInputField = (id: string, type?: string) => {
     return (
       <>
       <label htmlFor={id}>{id}:</label>
       <input
-        type="text"
+        type={type || "text"}
         id={id}
         name={id}
         value={updateProduct?.[id as keyof ProductItem]}
@@ -87,8 +87,8 @@ const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
           {renderInputField("name")}
           {renderInputField("manufacturer")}
           {renderInputField("category")}
-          {renderInputField("price")}
-          {renderInputField("weight")}
+          {renderInputField("price", "number")}
+          {renderInputField("weight", "number")}
           <input type="file" multiple />
           <textarea
             id="description"
