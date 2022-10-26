@@ -49,24 +49,19 @@ const CartFeed = () => {
   const [cart, setCart] = useState<CartItem | null>(null);
   const { user } = useContext(UserContext);
 
-  //  const totalCost = cart.reduce((total: number, item: Partial<CartItem & ProductItem>): number => {
-  //     return total + parseInt(item?.price?.replace(/\D+/g, ""))
+    const totalCost = cart?.products.reduce((total: number, item: any): number  => {
+      return total + parseInt(item?.totalCost?.replace(/\D+/g, ""))
+      
+   }, 0 )
 
-  //  }, 0 )
-
-  const createPurchase = () => {
-    console.log("CART", {
-      ...cart,
-      shippingCost: "79 kr",
-      deliveryAddress: user?.deliveryAddress,
-    });
-
-    makePurchase({
+  const createPurchase = async () => {
+    
+   await makePurchase({
       ...cart,
       shippingCost: "79 kr",
       deliveryAddress: user?.deliveryAddress,
     } as CartItem);
-    fetchData();
+    fetchData()
   };
 
   const fetchData = async () => {
@@ -78,8 +73,8 @@ const CartFeed = () => {
     fetchData();
   }, []);
 
-  const removeCartItem = (data: string) => {
-    deleteCartItem(data, -1);
+  const removeCartItem = async (data: string) => {
+    await deleteCartItem(data, -1);
     fetchData();
   };
 
@@ -98,7 +93,7 @@ const CartFeed = () => {
       </StyledList>
 
       <DivFixed>
-        {/* { <h3>Total: { `${totalCost} kr`}  </h3> } */}
+         { <h3>Total: { `${totalCost? totalCost: 0} kr`}  </h3> }
 
         <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
       </DivFixed>

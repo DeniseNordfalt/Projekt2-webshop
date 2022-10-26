@@ -97,7 +97,7 @@ export const deleteCartItem = async (req: JwtRequest<any>, res: Response) => {
   const changeQuantity = req.body.changeQuantity;
   const cart = await getShoppingCart(user);
   const cartProductReferences = cart?.products;
-  
+
   const productExistsInCart = (cartProductReferences as CartProduct[]).filter(item => item.productId == productId)
   console.log(productExistsInCart)
 
