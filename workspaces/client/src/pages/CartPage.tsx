@@ -7,7 +7,7 @@ type Props = {};
 export default function CartPage(props: Props) {
   return (
     <>
-      {/* <CartFeed /> */}
+      <CartFeed />
     </>
   );
 }
