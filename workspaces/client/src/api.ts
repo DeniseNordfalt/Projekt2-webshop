@@ -16,9 +16,10 @@ axios.interceptors.request.use((config) => {
 });
 
 export const addToCart = async (productId: string): Promise<void> => {
-  console.log("productID", productId);
   await axios.post("/shoppingcart", { productId });
 };
+
+//PRODUCTS
 
 export const getProducts = async (): Promise<ProductItem[]> => {
   return (await axios.get("/products")).data;
@@ -27,6 +28,8 @@ export const getProducts = async (): Promise<ProductItem[]> => {
 export const getProductById = async (id: string): Promise<ProductItem> => {
   return (await axios.get(`/products/id/${id}`)).data;
 };
+
+//USER
 
 export const registerUser = async (
   name: string,
@@ -68,15 +71,36 @@ export const logoutUser = async (): Promise<void> => {
   localStorage.removeItem("access_token");
 };
 
-export const getUser = async (): Promise<UserItem | null> => {
+export const getUser = async (): Promise<AxiosResponse | any> => {
   try {
-    return (await axios.get("/users/me")).data;
+    return await axios.get("/users/me");
   } catch (err) {
     console.error(err);
     return null;
   }
 };
 
+export const editUser = async (
+  name: string,
+  email: string,
+  phoneNumber: string,
+  deliveryAddress: object
+): Promise<UserItem | null> => {
+  try {
+    return (
+      await axios.patch(
+        "/users/me",
+
+        { name, email, phoneNumber, deliveryAddress }
+      )
+    ).data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+//CART
 export const getCart = async (): Promise<CartItem[]> => {
   return (await axios.get("/shoppingcart")).data;
 };
@@ -84,13 +108,16 @@ export const getCart = async (): Promise<CartItem[]> => {
 export const deleteCartItem = async (cartId: string): Promise<void> => {
   await axios.patch("/shoppingcart", { cartId });
 };
+
 export const purchase = async (): Promise<void> => {
   await axios.get("/shoppingcart/purchase");
 };
 
+//ORDERS
+
 export const editProduct = async (id: string, form: FormData) => {
   await axios.patch(`products/id/${id}`, form);
-}
+};
 
 export const getOrders = async (): Promise<OrderItem[]> => {
   return (await axios.get("/orders")).data as unknown as OrderItem[];
@@ -104,10 +131,12 @@ export const changeOrderStatus = async (cartId: string): Promise<void> => {
   await axios.patch("/orders/admin", cartId);
 };
 
-export const seachForProducts = async (search: string): Promise<ProductItem[]> => {
-  const res = await axios.get(`/products/search/${search}`)
-  return res.data as ProductItem[]
-}
+export const seachForProducts = async (
+  search: string
+): Promise<ProductItem[]> => {
+  const res = await axios.get(`/products/search/${search}`);
+  return res.data as ProductItem[];
+};
 
 export const addNewProduct = async (form: any): Promise<void> => {
   await axios.post("/products", form );

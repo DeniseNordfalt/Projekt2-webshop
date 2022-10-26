@@ -36,29 +36,48 @@ export const BodyTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0;
+  margin-top: 1rem;
 `;
 
-export const ProfileCardBodyText = styled.p`
-  font-size: 1rem;
-  font-weight: 400;
-  margin: 0;
-`;
-
-export const TextItem = styled.p`
-  font-size: 1rem;
-  font-weight: 400;
-  margin: 0;
-  padding: 0.5rem 0;
+export const TextItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.5rem 0;
 `;
 
 export const TextItemTitle = styled.p`
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
+  padding-right: 10px;
 `;
 
 export const TextItemValue = styled.p`
   font-size: 1rem;
   font-weight: 400;
   margin: 0;
+`;
+
+export const Separator = styled.hr`
+  border: 1px solid black;
+  margin: 0.5rem 0;
+`;
+
+export const Button = styled.button`
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 2px 2px 2px lightgray;
+  }
 `;

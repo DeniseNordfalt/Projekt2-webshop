@@ -1,8 +1,10 @@
 import { TokenPayload, UserItem } from "@project-webbshop/shared";
 import { NextFunction, Request, Response } from "express";
+import { serialize } from "v8";
 import { JwtRequest } from "../app";
 import { loadProductById } from "../models/Product";
 import {
+
   changeCartStatus,
   createPurchase,
   createShoppingCart,
@@ -10,11 +12,11 @@ import {
   deleteShoppingCartItem,
   getAllCarts,
   getShoppingCart,
-  upDateCart,
 } from "../models/ShoppingCart";
 
 export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const user = req.user?.userId;
+
 
   try {
     const cart = await getShoppingCart(user);
@@ -26,106 +28,93 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
 };
 
 
-/*
-updateCart()
-if cart with userId does not exist createCart({}cart object)
-routes.patch cart, create cart
-function createCart() {
-    //kolla om cart med userId finns
-    //skapa om den inte finns
-    next() // gå vidare
-}
-routes.patch cart, update cart
-function() {
-    // lägg till product i cart
-}
-*/
+
+
 export const createCart = async (req: JwtRequest<any>, res: Response) => {
   const user = req.user?.userId as string;
-  const cart = getShoppingCart(user)
+  const cart = await getShoppingCart(user)
+
+  const cartProduct = cart?.products
+  const changeQuantity = req.body.changeQuantity
+
+  const productExistsInCart = cartProduct?.find(item => item.productId === req.body.productId)
 
   try {
 
     if (!cart) {
       const cartItem = {
-                 userId: user,
-                 products: [ {
-                     productId: req.body.productId,
-                     quantity: req.body.quantity,
-                 }]}
-       await createShoppingCart(cartItem)
-      res.json({message: 'new cart added'})
-    } if (cart as any){
-       const cartProducts = {
+        userId: user,
+        products: [{
           productId: req.body.productId,
-          quantity: req.body.quantity
-       }
-  
-      await upDateCart(user, cartProducts as any)
-    } 
-    
-    
+          quantity: changeQuantity
+        }]
+      }
+      console.log(cartItem)
+      await createShoppingCart(cartItem)
+      res.json({ message: 'new cart added' })
+    } else if (cart as any && productExistsInCart) {
+      const cartProducts = productExistsInCart.quantity + changeQuantity
+
+
+      await updateQuantityInCart(user, req.body.productId, cartProducts as any)
+      res.json({ message: 'quantity added' })
+    } else if (cart as any && !productExistsInCart) {
+      const cartProducts = {
+        productId: req.body.productId,
+        quantity: 1
+      }
+
+      await addProductToCart(user, cartProducts as any)
+      res.json({ message: 'new product added' })
+    } else {
+      res.json("You suck!")
+    }
+
+
   } catch (err) {
 
     console.error(err);
     res.status(404).json({ message: err });
-    
+
   }
 
-  
+
 
 };
 
 export const deleteCartItem = async (req: JwtRequest<any>, res: Response) => {
   const productId = req.body.productId
-  const userId = req.user?.userId as string;
+  const user = req.user?.userId as string;
+  const changeQuantity = req.body.changeQuantity
+  console.log("delete", productId, changeQuantity, user)
+  const cart = await getShoppingCart(user)
+
+  const cartProduct = cart?.products
+
+  const productExistsInCart = cartProduct?.filter(item => item.productId == productId)
+  console.log(productExistsInCart)
 
   try {
-    await deleteShoppingCartItem(userId, productId);
-    res.json({ message: "Cart-item Deleted" });
-  } catch (err) {
-    console.error(err);
-    res.status(404).json({ message: err });
-  }
-};
-export const deleteCart = async (req: JwtRequest<any>, res: Response) => {
-  const userId = req.user?.userId as string;
+    if (productExistsInCart[0].quantity as any > 1) {
+      const cartProducts = productExistsInCart[0].quantity + changeQuantity
 
-  try {
-    await deleteAllCart(userId);
-    res.json({ message: "Cart deleted" });
-  } catch (err) {
-    console.error(err);
-    res.status(404).json({ message: err });
-  }
-};
-export const createBuy = async (req: JwtRequest<any>, res: Response) => {
-  const userId = req.user?.userId as string;
 
-  try {
-    await createPurchase(userId);
-    res.json({ message: "Purchase made!" });
-  } catch (err) {
-    console.error(err);
-    res.status(404).json({ message: err });
-  }
-};
-export const changeCartItem = async (req: JwtRequest<any>, res: Response) => {
-  const isAdmin = req.user?.roles.includes("admin");
-  const cartItem = req.body.cartId as string;
+      await updateQuantityInCart(user, req.body.productId, cartProducts as any)
+      res.json({ message: 'quantity minus' })
+    } else if (productExistsInCart[0].quantity as any >= 1) {
 
-  if (isAdmin) {
-    try {
-      await changeCartStatus(cartItem);
-      res.json("Order Changed");
-    } catch (err) {
-      console.error(err);
-      res.status(404).json({ message: err });
+
+      await deleteProductFromCart(user, productId)
+      res.json('deleted')
     }
-  } else {
-    res.status(401).json("Unauthorized");
+
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ message: err });
   }
+
 };
+
 export const getAllCartItems = async (req: JwtRequest<any>, res: Response) => {
   const isAdmin = req.user?.roles.includes("admin");
 
@@ -137,6 +126,7 @@ export const getAllCartItems = async (req: JwtRequest<any>, res: Response) => {
       console.error(err);
       res.status(404).json({ message: err });
     }
+
   } else {
     res.status(401).json("Unauthorized");
   }

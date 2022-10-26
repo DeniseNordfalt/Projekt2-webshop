@@ -39,8 +39,13 @@ const ProductFeed = (props: Props) => {
   });
 
   const filterFeedOnSearch = async (searchTerm: string) => {
-    const res = await seachForProducts(searchTerm);
-    setProductList(res);
+    if (searchTerm !== "") {
+      const res = await seachForProducts(searchTerm);
+
+      if (res && res.length > 0) {
+        setProductList(res);
+      }
+    }
   };
 
   const handleNewProduct = (
