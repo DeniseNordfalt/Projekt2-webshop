@@ -18,7 +18,7 @@ const DetailedProduct = (props: Props) => {
   const { user } = useContext(UserContext);
 
   const renderImage = (imageName: string) => {
-    return `http://localhost:8800/uploads/${imageName}`;
+    return `${process.env.REACT_APP_SERVER_URL}uploads/${imageName}`;
   };
 
   const fetchData = async () => {
@@ -37,9 +37,7 @@ const DetailedProduct = (props: Props) => {
   }, [product]);
 
   const handleOnClick = (productId: string) => {
-
-    addToCart(productId, 1)
-
+    addToCart(productId, 1);
   };
 
   const performProductEdit = (
