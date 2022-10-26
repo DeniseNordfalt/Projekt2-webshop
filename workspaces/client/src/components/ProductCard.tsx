@@ -70,7 +70,7 @@ const ProductCard = ({ data }: Props) => {
   const navigate = useNavigate();
 
   const renderImage = (imageName: string) => {
-    return `${process.env.REACT_APP_SERVER_URL}uploads/${imageName}`;
+    return `${process.env.REACT_APP_SERVER_URL}/uploads/${imageName}`;
   };
 
   return (

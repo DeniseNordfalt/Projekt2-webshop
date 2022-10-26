@@ -62,7 +62,7 @@ type Props = {
 
 const CartCard = ({ item, deleteProduct }: Props) => {
   const renderImage = (imageName: string) => {
-    return `${process.env.REACT_APP_SERVER_URL}uploads/${imageName}`;
+    return `${process.env.REACT_APP_SERVER_URL}/uploads/${imageName}`;
   };
 
   return (
@@ -77,7 +77,6 @@ const CartCard = ({ item, deleteProduct }: Props) => {
         <p>{item.quantity}</p>
 
         <StyledButton onClick={(e) => deleteProduct(item._id as string)}>
-
           remove
         </StyledButton>
       </TextWrapper>

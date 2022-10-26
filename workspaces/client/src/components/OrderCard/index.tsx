@@ -10,7 +10,7 @@ type Props = {
 
 const OrderCard = ({ data, isAdmin }: Props) => {
   const renderImage = (imageName: string): string => {
-    return `${process.env.REACT_APP_SERVER_URL}uploads/${imageName}`;
+    return `${process.env.REACT_APP_SERVER_URL}/uploads/${imageName}`;
   };
 
   const renderDeliveryAddress = (address: any) => {
