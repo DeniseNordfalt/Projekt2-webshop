@@ -1,9 +1,12 @@
-import { TokenPayload, UserItem } from "@project-webbshop/shared";
-import { NextFunction, Request, Response } from "express";
-import { serialize } from "v8";
+import { ProductItem, TokenPayload, UserItem } from "@project-webbshop/shared";
+import { CartProduct } from "@project-webbshop/shared/src/CartItem";
+import { Response } from "express";
+
 import { JwtRequest } from "../app";
 import { loadProductById } from "../models/Product";
+
 import {
+
   addProductToCart,
   createShoppingCart,
   deleteProductFromCart,
@@ -16,8 +19,18 @@ export const getCart = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const user = req.user?.userId;
 
   try {
-    const cart = await getShoppingCart(user);
-    res.json(cart);
+    const cart = await getShoppingCart(user) as any;
+    let products = []
+    for (const item of cart.products) {
+
+      products.push({ ...(await loadProductById(item.productId) as any)?.toObject(), quantity: item.quantity })
+
+    }
+
+
+
+
+    res.json({ ...cart.toObject(), products });
   } catch (err) {
     console.error("ERR", err);
     res.status(400).json({ error: "Cant load shoppingcart" });
@@ -28,12 +41,12 @@ export const createCart = async (req: JwtRequest<any>, res: Response) => {
   const user = req.user?.userId as string;
   const cart = await getShoppingCart(user);
 
-  const cartProduct = cart?.products;
-  const changeQuantity = req.body.changeQuantity;
 
-  const productExistsInCart = cartProduct?.find(
-    (item) => item.productId === req.body.productId
-  );
+  const cartProduct = cart?.products || []
+  const changeQuantity = req.body.changeQuantity
+
+  const productExistsInCart = (cartProduct as CartProduct[]).find(item => item?.productId === req.body.productId)
+
 
   try {
     if (!cart) {
@@ -80,10 +93,10 @@ export const deleteCartItem = async (req: JwtRequest<any>, res: Response) => {
 
   const cartProduct = cart?.products;
 
-  const productExistsInCart = cartProduct?.filter(
-    (item) => item.productId == productId
-  );
-  console.log(productExistsInCart);
+
+  const productExistsInCart = (cartProduct as CartProduct[]).filter(item => item.productId == productId)
+  console.log(productExistsInCart)
+
 
   try {
     if ((productExistsInCart[0].quantity as any) > 1) {

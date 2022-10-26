@@ -7,5 +7,7 @@ export interface ProductItem {
     weight: string,
     price: string,
     manufacturer: string,
-    images: any[]
+    images: any[],
+    quantity?: number,
+    productId?: string
 }

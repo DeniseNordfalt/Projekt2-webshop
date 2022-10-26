@@ -45,12 +45,18 @@ const StyledButton = styled.button`
   }
 `;
 
-const CartFeed = () => {
-  const [cartList, setCartList] = useState<CartItem[]>([]);
 
-  // const totalCost = cartList.reduce((total: number, item: CartItem): number => {
-  //   return total + parseInt(item.price.replace(/\D+/g, ""));
-  // }, 0);
+const CartFeed =() => {
+  const [cart, setCart] = useState<CartItem | null>(null)
+  
+
+
+  //  const totalCost = cart.reduce((total: number, item: Partial<CartItem & ProductItem>): number => {
+  //     return total + parseInt(item?.price?.replace(/\D+/g, "")) 
+      
+
+  //  }, 0 )
+
 
   const createPurchase = () => {
     purchase();
@@ -58,27 +64,34 @@ const CartFeed = () => {
   };
 
   const fetchData = async () => {
-    const data = await getCart();
 
-    setCartList(data);
-  };
+    const data = await getCart()
+    console.log(data)
+    
+    setCart(data)
+ 
+  }
+
   useEffect(() => {
     fetchData();
+    
   }, []);
 
   return (
     <>
-      {/*     
-      <StyledList>
-        {cartList.map((cartList) => {
-          return <CartCard fetchData={fetchData} data={cartList} key={cartList._id}/>;
+
+    
+      <StyledList >
+        {cart?.products.map((item: any) => {
+          return <CartCard fetchData={fetchData} item={item} key={item._id}/>;
+
         })}
 
       </StyledList>
       
     
     <DivFixed>
-    <h3>Total: { `${totalCost} kr`}  </h3>
+     {/* { <h3>Total: { `${totalCost} kr`}  </h3> } */}
 
     <StyledButton onClick={(e) => createPurchase()}>Purchase</StyledButton>
   </DivFixed> */}

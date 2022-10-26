@@ -64,16 +64,16 @@ padding: 15px;
 }
 `
 type Props = {
-  data: CartItem;
+  item: ProductItem;
   fetchData: Function
 };
 
-const CartCard = ({data, fetchData}: Props) => {
+const CartCard = ({item, fetchData}: Props) => {
    
   
   
   const removeCartItem = (data: string) => {
-    deleteCartItem(data)
+    deleteCartItem(data, -1)
     
     fetchData()
     
@@ -83,13 +83,15 @@ const CartCard = ({data, fetchData}: Props) => {
 
   
   return (
-    <Container key={data._id}>
+    <Container key={item.productId}>
 
-      {/* <Thumbnail src={data.images[0]} />
+
+      <Thumbnail src={item.images[0]} />
+
       <TextWrapper>
-        <h3 style={{margin: "10px"}}>{data.product}</h3>
-        <p style={{margin: "10px"}}>{data.price}</p>
-        <StyledButton onClick={(e) => removeCartItem(data._id as string)}>remove</StyledButton>
+        <h3 style={{margin: "10px"}}>{item.name}</h3>
+        <p style={{margin: "10px"}}>{item.price}</p>
+        <StyledButton onClick={(e) => removeCartItem(item._id as string)}>remove</StyledButton>
         
       </TextWrapper> */}
       
