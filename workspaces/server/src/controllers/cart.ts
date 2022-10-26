@@ -1,4 +1,5 @@
 import { ProductItem, TokenPayload, UserItem } from "@project-webbshop/shared";
+import { CartProduct } from "@project-webbshop/shared/src/CartItem";
 import { Response } from "express";
 
 import { JwtRequest } from "../app";
@@ -47,7 +48,7 @@ export const createCart = async (req: JwtRequest<any>, res: Response) => {
   const cartProduct = cart?.products || []
   const changeQuantity = req.body.changeQuantity
 
-  const productExistsInCart = cartProduct?.find(item => item?.productId === req.body.productId)
+  const productExistsInCart = (cartProduct as CartProduct[]).find(item => item?.productId === req.body.productId)
 
   try {
 
@@ -101,7 +102,7 @@ export const deleteCartItem = async (req: JwtRequest<any>, res: Response) => {
 
   const cartProduct = cart?.products
 
-  const productExistsInCart = cartProduct?.filter(item => item.productId == productId)
+  const productExistsInCart = (cartProduct as CartProduct[]).filter(item => item.productId == productId)
   console.log(productExistsInCart)
 
   try {

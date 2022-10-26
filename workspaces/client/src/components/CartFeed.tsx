@@ -54,7 +54,7 @@ padding: 15px;
 
 
 const CartFeed =() => {
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<CartItem | null>(null)
   
 
 
@@ -86,8 +86,8 @@ const CartFeed =() => {
     <>
     
       <StyledList >
-        {cart.products.map((item: any) => {
-          return <CartCard fetchData={fetchData} data={item} key={item._id}/>;
+        {cart?.products.map((item: any) => {
+          return <CartCard fetchData={fetchData} item={item} key={item._id}/>;
         })}
 
       </StyledList>
