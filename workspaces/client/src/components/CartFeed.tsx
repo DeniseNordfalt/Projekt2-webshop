@@ -1,8 +1,8 @@
-import { CartItem, ProductItem } from "@project-webbshop/shared";
-import React, { useEffect, useState } from "react";
+import { CartItem } from "@project-webbshop/shared";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import { deleteCartItem, getCart, purchase } from "../api";
-
+import { deleteCartItem, getCart, makePurchase } from "../api";
+import { UserContext } from "../App";
 import CartCard from "./CartCard";
 
 type Props = {};
@@ -47,6 +47,7 @@ const StyledButton = styled.button`
 
 const CartFeed = () => {
   const [cart, setCart] = useState<CartItem | null>(null);
+  const { user } = useContext(UserContext);
 
     const totalCost = cart?.products.reduce((total: number, item: any): number => {
        return total + parseInt(item?.totalCost?.replace(/\D+/g, ""))
@@ -54,14 +55,22 @@ const CartFeed = () => {
    }, 0 )
 
   const createPurchase = () => {
-    purchase();
+    console.log("CART", {
+      ...cart,
+      shippingCost: "79 kr",
+      deliveryAddress: user?.deliveryAddress,
+    });
+
+    makePurchase({
+      ...cart,
+      shippingCost: "79 kr",
+      deliveryAddress: user?.deliveryAddress,
+    } as CartItem);
     fetchData();
   };
 
   const fetchData = async () => {
     const data = await getCart();
-    
-
     setCart(data);
   };
 
@@ -69,11 +78,22 @@ const CartFeed = () => {
     fetchData();
   }, []);
 
+  const removeCartItem = (data: string) => {
+    deleteCartItem(data, -1);
+    fetchData();
+  };
+
   return (
     <>
       <StyledList>
         {cart?.products.map((item: any) => {
-          return <CartCard fetchData={fetchData} item={item} key={item._id} />;
+          return (
+            <CartCard
+              deleteProduct={removeCartItem}
+              item={item}
+              key={item._id}
+            />
+          );
         })}
       </StyledList>
 
