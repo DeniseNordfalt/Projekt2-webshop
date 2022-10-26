@@ -1,11 +1,14 @@
 import { CartItem } from "@project-webbshop/shared";
 import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { deleteCartItem, getCart, makePurchase } from "../api";
 import { UserContext } from "../App";
 import CartCard from "./CartCard";
 
 type Props = {};
+
+
 
 const StyledList = styled.div`
   display: flex;
@@ -46,6 +49,7 @@ const StyledButton = styled.button`
 `;
 
 const CartFeed = () => {
+  const navigate = useNavigate()
   const [cart, setCart] = useState<CartItem | null>(null);
   const { user } = useContext(UserContext);
 
@@ -61,7 +65,7 @@ const CartFeed = () => {
       shippingCost: "79 kr",
       deliveryAddress: user?.deliveryAddress,
     } as CartItem);
-    fetchData()
+    navigate("/orders")
   };
 
   const fetchData = async () => {
