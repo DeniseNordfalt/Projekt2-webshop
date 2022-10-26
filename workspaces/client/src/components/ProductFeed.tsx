@@ -63,10 +63,10 @@ const ProductFeed = (props: Props) => {
     }
   };
 
-  const handleNewProduct = (
+  const handleNewProduct = async(
     target: any,
     updateProduct: ProductItem | Partial<ProductItem> | null
-  ): void => {
+  ): Promise<void> => {
     const files = target[5].files;
     const formData = new FormData();
 
@@ -83,7 +83,7 @@ const ProductFeed = (props: Props) => {
         formData.append("files", files[key]);
       }
     }
-    addNewProduct(formData);
+    await addNewProduct(formData);
     fetchData();
     setIsModalVisible(false);
     window.location.reload()
