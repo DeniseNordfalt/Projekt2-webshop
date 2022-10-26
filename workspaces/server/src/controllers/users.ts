@@ -30,7 +30,13 @@ export const editUser = async (
   res: Response
 ) => {
   const body = req.body;
-  const editables = ["name", "email", "phoneNumber", "deliveryAddress"];
+  const editables = [
+    "name",
+    "email",
+    "phoneNumber",
+    "roles",
+    "deliveryAddress",
+  ];
   let edits: Partial<UserItem> = {};
 
   editables.forEach((item) => {
@@ -54,6 +60,12 @@ export const editUser = async (
               body[item][adressItem];
           }
         });
+      } else if (item === "roles") {
+        if (body[item].includes("admin")) {
+          edits[item] = ["customer", "admin"];
+        } else {
+          edits[item] = ["customer"];
+        }
       }
     }
   });

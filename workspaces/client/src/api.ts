@@ -15,7 +15,10 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-export const addToCart = async (productId: string, changeQuantity: number): Promise<void> => {
+export const addToCart = async (
+  productId: string,
+  changeQuantity: number
+): Promise<void> => {
   await axios.post("/shoppingcart", { productId, changeQuantity });
 };
 
@@ -84,6 +87,7 @@ export const editUser = async (
   name: string,
   email: string,
   phoneNumber: string,
+  roles: string[],
   deliveryAddress: object
 ): Promise<UserItem | null> => {
   try {
@@ -91,7 +95,7 @@ export const editUser = async (
       await axios.patch(
         "/users/me",
 
-        { name, email, phoneNumber, deliveryAddress }
+        { name, email, phoneNumber, roles, deliveryAddress }
       )
     ).data;
   } catch (err) {
@@ -105,12 +109,15 @@ export const getCart = async (): Promise<CartItem> => {
   return (await axios.get("/shoppingcart")).data;
 };
 
-export const deleteCartItem = async (productId: string, changeQuantity: number): Promise<void> => {
-  await axios.patch("/shoppingcart", {productId, changeQuantity });
+export const deleteCartItem = async (
+  productId: string,
+  changeQuantity: number
+): Promise<void> => {
+  await axios.patch("/shoppingcart", { productId, changeQuantity });
 };
 
 export const makePurchase = async (cart: CartItem): Promise<void> => {
-  await axios.post("/orders", {cart});
+  await axios.post("/orders", { cart });
 };
 
 //ORDERS
@@ -135,13 +142,17 @@ export const seachForProducts = async (
   search: string
 ): Promise<ProductItem[]> => {
   const res = await axios.get(`/products/search/${search}`);
+
   return res.data as ProductItem[];
 };
 
 export const addNewProduct = async (form: any): Promise<void> => {
-  await axios.post("/products", form );
-}
+  await axios.post("/products", form);
+};
 
-export const updateOrderStatus = async (cartId: string, status: string): Promise<any> => {
-  return (await axios.patch(`/orders/${cartId}/admin`, {status})).data;
-}
+export const updateOrderStatus = async (
+  cartId: string,
+  status: string
+): Promise<any> => {
+  return (await axios.patch(`/orders/${cartId}/admin`, { status })).data;
+};

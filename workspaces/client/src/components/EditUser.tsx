@@ -49,11 +49,13 @@ type Props = {};
 
 export default function EditUser({}: Props) {
   const { user } = useContext(UserContext);
+  console.log("user", user);
 
   const [formData, setFormData] = useState({
     name: user?.name as string,
     email: user?.email as string,
     phoneNumber: user?.phoneNumber as string,
+    roles: user?.roles as string[],
   });
 
   const [adressData, setAdressData] = useState({
@@ -70,6 +72,7 @@ export default function EditUser({}: Props) {
       formData.name,
       formData.email,
       formData.phoneNumber,
+      formData.roles,
       adressData
     );
 
@@ -160,6 +163,18 @@ export default function EditUser({}: Props) {
             setAdressData({ ...adressData, [e.target.name]: e.target.value })
           }
           required
+        />
+
+        <label htmlFor="admin">Make admin for dev purposes</label>
+        <input
+          type="checkbox"
+          name="admin"
+          id="admin"
+          value={formData.roles}
+          onChange={(e) => {
+            setFormData({ ...formData, roles: ["admin"] });
+          }}
+          checked={formData.roles.includes("admin") === true}
         />
 
         <StyledButton type="submit">Update</StyledButton>

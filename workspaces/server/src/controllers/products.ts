@@ -80,7 +80,7 @@ export const getProductsBySearch = async (req: Request, res: Response) => {
     if (products.length > 0) {
       res.json(products);
     } else {
-      res.json({ error: "No products found" });
+      res.status(404).json({ error: "No products found" });
     }
   } catch (err: any) {
     res.status(500).json({ error: err.message });

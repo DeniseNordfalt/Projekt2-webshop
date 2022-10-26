@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import { registerUser } from "../api";
 
 import styled from "styled-components";
@@ -67,6 +67,7 @@ export default function RegisterUser() {
       formData.phoneNumber,
       formData.deliveryAddress
     );
+    window.location.reload();
   };
 
   return (
