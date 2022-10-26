@@ -27,7 +27,8 @@ const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 300px;
+  min-height: 300px;
+  height: fit-content;
   padding: 15px;
   background-color: white;
   z-index: 105;
@@ -38,6 +39,12 @@ const StyledForm = styled.form`
   margin: auto;
   input {
     width: 90%;
+    border: 1px solid black;
+    outline: none;
+  }
+  textarea {
+    border: 1px solid black;
+    outline: none;
   }
 `;
 
@@ -58,16 +65,17 @@ const ProductModal = ({ data, handleOnSubmit, setVisibility }: Props) => {
 
   const renderInputField = (id: string) => {
     return (
+      <>
+      <label htmlFor={id}>{id}:</label>
       <input
         type="text"
         id={id}
         name={id}
-        placeholder={id + "..."}
         value={updateProduct?.[id as keyof ProductItem]}
         onChange={(e) =>
           handleOnChange(id as keyof ProductItem, e.target.value)
         }
-      />
+      /></>
     );
   };
 
