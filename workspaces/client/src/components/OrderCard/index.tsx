@@ -1,13 +1,7 @@
 import React from "react";
-import { CartItem, OrderItem } from "@project-webbshop/shared";
-import styled from "styled-components";
-import * as s from "./styles";
+import { OrderItem } from "@project-webbshop/shared";
 import { updateOrderStatus } from "../../api";
-
-const TextWrapper = styled.div`
-  width: 100%;
-  height: 20%;
-`;
+import * as s from "./styles";
 
 type Props = {
   data: OrderItem;
@@ -19,7 +13,9 @@ const OrderCard = ({ data, isAdmin }: Props) => {
     return `http://localhost:8800/uploads/${imageName}`;
   };
 
-  const deliveryAdress = `${data.deliveryAddress.streetName} ${data.deliveryAddress.streetNumber} ${data.deliveryAddress.county} ${data.deliveryAddress.postalCode}`;
+  const renderDeliveryAddress = (address: any) => {
+    return `${address.streetName} ${address.streetNumber} ${address.county} ${address.postalCode}`;
+  };
   const handleOnSubmit = async (e: any) => {
     e.preventDefault();
     const res = await updateOrderStatus(data._id, e.target[0].value);
@@ -29,9 +25,11 @@ const OrderCard = ({ data, isAdmin }: Props) => {
   const renderStatusOptions = () => {
     const options = ["behandlas", "registrerad", "under leverans", "levererad"];
     return options.map((option, index) => {
-      return <option key={index} value={option}>
+      return (
+        <option key={index} value={option}>
           {option}
         </option>
+      );
     });
   };
   return (
@@ -42,16 +40,19 @@ const OrderCard = ({ data, isAdmin }: Props) => {
       {isAdmin && <h3>Customer</h3>}
       <ul>
         <li>Customer id: {data.userId}</li>
-        <li>Address: {deliveryAdress}</li>
-        <li>
-          Status: {data.status}
-        </li>
-        {isAdmin && <li>Update status: <form onSubmit={handleOnSubmit}>
-            <select id="status" name="status" defaultValue={data.status}>
-            {renderStatusOptions()}
-            </select>
-            <input type="submit" value="Submit" />
-          </form></li>}
+        <li>Address: {renderDeliveryAddress(data?.deliveryAddress)}</li>
+        <li>Status: {data.status}</li>
+        {isAdmin && (
+          <li>
+            Update status:{" "}
+            <form onSubmit={handleOnSubmit}>
+              <select id="status" name="status" defaultValue={data.status}>
+                {renderStatusOptions()}
+              </select>
+              <input type="submit" value="Submit" />
+            </form>
+          </li>
+        )}
       </ul>
       <s.ProductList>
         {data.products.map((product, index) => {
