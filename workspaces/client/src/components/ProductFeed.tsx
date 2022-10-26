@@ -86,6 +86,7 @@ const ProductFeed = (props: Props) => {
     addNewProduct(formData);
     fetchData();
     setIsModalVisible(false);
+    window.location.reload()
   };
 
   return (
@@ -121,9 +122,6 @@ const ProductFeed = (props: Props) => {
         )}
         <CategoryList data={uniqueCatagories} />
       </aside>
-      <>
-      {console.log("PRODUCTS", productList)}
-      </>
       <StyledList>
         {category
           ? productList
