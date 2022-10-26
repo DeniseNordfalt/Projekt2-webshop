@@ -46,8 +46,6 @@ const ProductFeed = (props: Props) => {
     fetchData();
   }, []);
 
-  console.log("productlist", productList);
-
   const uniqueCatagories: string[] = [];
   productList.forEach((item) => {
     if (!uniqueCatagories.includes(item.category) && item.category) {

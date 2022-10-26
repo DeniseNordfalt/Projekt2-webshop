@@ -69,8 +69,6 @@ export default function EditUser({}: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("data", formData.roles);
-
     const data = await editUser(
       formData.name,
       formData.email,
