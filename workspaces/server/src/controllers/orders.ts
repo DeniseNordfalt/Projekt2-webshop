@@ -60,7 +60,7 @@ export const handleNewOrder = async (
   try {
     const newOrder = await createOrder(order as OrderItem);
     res.json(newOrder);
-    await deleteCart(req.user?.userId)
+    await deleteCart(req.user?.userId as string)
   } catch (err) {
     if (err instanceof Error) {
       console.error(err);
