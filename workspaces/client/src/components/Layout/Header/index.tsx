@@ -21,6 +21,7 @@ export default function Header({}: Props) {
 
     if (token) {
       const response = await getUser();
+      console.log(user);
 
       if (response.status === 200) {
         setUser(response.data);
@@ -44,27 +45,25 @@ export default function Header({}: Props) {
         <Link to={"/"}>WEBSHOP</Link>
       </s.Logo>
       <s.Nav>
-        <s.NavItem href="/">Home</s.NavItem>
-        {user?.roles.includes("admin") &&
-          <s.NavItem href="/admin">Admin</s.NavItem>}
+        {user ? (
+          <s.User>
+            <s.UserName onClick={handleClick}>{user?.name}</s.UserName>
+            <s.UserMenu isVisible={isVisible}>
+              {user?.roles.includes("admin") && (
+                <s.UserMenuItem href="/admin">Admin</s.UserMenuItem>
+              )}
+              <s.UserMenuItem href="/me">Profile</s.UserMenuItem>
+              <s.UserMenuItem href="/orders">Orders</s.UserMenuItem>
+              <s.UserMenuItem href="/shoppingcart">ShoppingCart</s.UserMenuItem>
+              <s.UserMenuItem onClick={logout}>Logout</s.UserMenuItem>
+            </s.UserMenu>
+          </s.User>
+        ) : (
+          <s.User>
+            <s.UserMenuItem href="/user">Login</s.UserMenuItem>
+          </s.User>
+        )}
       </s.Nav>
-      {user ? (
-        <s.User>
-          
-          <s.UserName onClick={handleClick}>{user?.name}</s.UserName>
-
-          <s.UserMenu isVisible={isVisible}>
-            <s.UserMenuItem href="/me">Profile</s.UserMenuItem>
-            <s.UserMenuItem href="/orders">Orders</s.UserMenuItem>
-            <s.UserMenuItem href="/shoppingcart">ShoppingCart</s.UserMenuItem>
-            <s.UserMenuItem onClick={logout}>Logout</s.UserMenuItem>
-          </s.UserMenu>
-        </s.User>
-      ) : (
-        <s.User>
-          <s.UserMenuItem href="/user">Login</s.UserMenuItem>
-        </s.User>
-      )}
     </s.Container>
   );
 }
