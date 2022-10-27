@@ -9,7 +9,7 @@ import { UserContext } from "../../../App";
 type Props = {};
 
 export default function Header({}: Props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -22,7 +22,6 @@ export default function Header({}: Props) {
 
     if (token) {
       const response = await getUser();
-      
 
       if (response.status === 200) {
         setUser(response.data);
@@ -39,8 +38,7 @@ export default function Header({}: Props) {
   const logout = () => {
     localStorage.removeItem("access_token");
     setUser(null);
-    navigate("/")
-
+    navigate("/");
   };
   return (
     <s.Container>
