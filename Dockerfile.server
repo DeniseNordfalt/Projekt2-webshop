@@ -11,6 +11,7 @@ RUN npm ci -w workspaces/server
 COPY ./workspaces/server ./workspaces/server
 COPY ./workspaces/shared ./workspaces/shared
 
+
 RUN npm run build -w workspaces/server
 
 EXPOSE 4000

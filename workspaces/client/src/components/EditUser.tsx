@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../App";
-import { editUser } from "../api";
+import { editUser, newToken } from "../api";
 
 import styled from "styled-components";
 
@@ -75,7 +75,7 @@ export default function EditUser({}: Props) {
       formData.roles,
       adressData
     );
-
+     await newToken()
     window.location.reload();
   };
 
