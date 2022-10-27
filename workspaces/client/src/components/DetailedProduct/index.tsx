@@ -59,6 +59,7 @@ const DetailedProduct = (props: Props) => {
     }
     editProduct(updateProduct?._id || "0", formData);
     setIsModalVisible(false);
+    window.location.reload();
   };
 
   return (
@@ -72,7 +73,7 @@ const DetailedProduct = (props: Props) => {
           </p>
 
           <h2 style={{ textAlign: "center" }}>{product.name}</h2>
-         
+
           <s.ProductInfoWrapper>
             <div style={{ width: "100%" }}>
               {currentImage && (
@@ -97,12 +98,12 @@ const DetailedProduct = (props: Props) => {
             </div>
             <s.InfoContainer>
               <div>
-              <s.Lable>Price:</s.Lable>
-                <p >{product.price}kr</p>
+                <s.Lable>Price:</s.Lable>
+                <p>{product.price}kr</p>
                 <s.Lable>Weight:</s.Lable>
                 <p> {product.weight}kg</p>
                 <s.Lable>Manufacturer: </s.Lable>
-                <p > {product.manufacturer}</p>
+                <p> {product.manufacturer}</p>
               </div>
               <s.Lable>Description:</s.Lable>
               <p> {product.description}</p>
