@@ -70,6 +70,20 @@ export const loginUser = async (
   }
 };
 
+export const newToken = async (): Promise<void> => {
+  const res = await axios.get('/auth')
+    if (res.data.user) {
+      try {
+        localStorage.setItem("access_token", res.data.token)
+      } catch (err) {
+        console.error(err)
+      }
+     
+      
+    } 
+
+} 
+
 export const logoutUser = async (): Promise<void> => {
   localStorage.removeItem("access_token");
 };

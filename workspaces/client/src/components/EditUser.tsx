@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../App";
-import { editUser, loginUser, logoutUser } from "../api";
+import { editUser, newToken } from "../api";
 
 import styled from "styled-components";
 
@@ -76,11 +76,7 @@ export default function EditUser({}: Props) {
       roles,
       adressData
     );
-
-    if (roles.includes("admin")) {
-      logoutUser();
-    }
-
+     await newToken()
     window.location.reload();
   };
 
