@@ -76,7 +76,7 @@ export default function EditUser({}: Props) {
       roles,
       adressData
     );
-     await newToken()
+    await newToken();
     window.location.reload();
   };
 
@@ -166,9 +166,7 @@ export default function EditUser({}: Props) {
           required
         />
 
-        <label htmlFor="admin">
-          Make admin for dev purposes 
-        </label>
+        <label htmlFor="admin">Make admin/customer for dev purposes</label>
 
         <input
           type="checkbox"
