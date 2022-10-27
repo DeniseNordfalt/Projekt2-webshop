@@ -6,24 +6,26 @@ import { findUserById, handleNewUser, updateUser } from "../models/User";
 export const createUser = async (req: Request, res: Response) => {
   const { name, email, password, phoneNumber, role, deliveryAddress } =
     req.body;
-  // TODO: check required fields
-  try {
-    const user = await handleNewUser(req.body);
-    console.log("USER", user);
-  } catch (err) {
-    console.error("ERR", err);
-    res.status(409).json({ error: "User already exists" });
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "Missing required fields" });
+  } else {
+    try {
+      const user = await handleNewUser(req.body);
+      res.status(200).json({ message: "User created!" });
+    } catch (err) {
+      res.status(409).json({ error: "User already exists" });
+    }
   }
-  res.json({ message: "User created!" });
 };
 
 export const getUser = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const id = req?.user?.userId;
   if (id) {
     const user = await findUserById(id);
-    res.json(user);
+    res.status(200).json(user);
   } else {
-    res.json({ error: "User not found" });
+    res.status(401).json({ error: "User not found" });
   }
 };
 
@@ -32,13 +34,19 @@ export const editUser = async (
   res: Response
 ) => {
   const body = req.body;
-  const editables = ["name", "email", "phoneNumber", "deliveryAddress"];
+  const editables = [
+    "name",
+    "email",
+    "phoneNumber",
+    "roles",
+    "deliveryAddress",
+  ];
   let edits: Partial<UserItem> = {};
 
   editables.forEach((item) => {
     if (body.hasOwnProperty(item)) {
       edits[item as keyof UserItem] = body[item];
-        
+
       if (item === "deliveryAddress") {
         const adressEditables = [
           "streetName",
@@ -56,10 +64,15 @@ export const editUser = async (
               body[item][adressItem];
           }
         });
-      } 
+      } else if (item === "roles") {
+        if (body[item].includes("admin")) {
+          edits[item] = ["customer", "admin"];
+        } else {
+          edits[item] = ["customer"];
+        }
+      }
     }
   });
-  console.log("EDITS", edits);
 
   if (Object.keys(edits).length) {
     let user: UserItem | null = null;

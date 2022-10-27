@@ -10,8 +10,8 @@ import dotenv from "dotenv";
 import indexRouter from "./routes/index";
 import { setupMongoDb } from "./config/common";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
-import cookieParser from "cookie-parser";
 import { TokenPayload } from "@project-webbshop/shared";
+import multer from "multer";
 
 dotenv.config();
 
@@ -21,7 +21,17 @@ const mongoUrl: string = process.env.MONGODB_URL || "";
 
 app.use(cors());
 app.use(json());
-app.use(cookieParser());
+
+const storage = multer.diskStorage({
+  destination: "uploads",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.use(upload.array("files"));
+app.use("/uploads", express.static("./uploads"));
 
 export interface JwtRequest<T> extends Request<T> {
   user?: TokenPayload;
@@ -29,7 +39,6 @@ export interface JwtRequest<T> extends Request<T> {
 
 app.use(
   async (req: JwtRequest<TokenPayload>, res: Response, next: NextFunction) => {
-    // const token = req.cookies.access_token;
     const authHeader = req.header("Authorization");
     if (authHeader && authHeader.split(" ")[0] === "Bearer") {
       const token = authHeader.split(" ")[1];
@@ -38,7 +47,6 @@ app.use(
           token,
           process.env.JWT_SECRET as string
         ) as TokenPayload;
-        console.log("TOKEN IS OK");
       } catch (err) {
         if (err instanceof JsonWebTokenError) {
           console.error(err);
@@ -56,9 +64,9 @@ app.use("/", indexRouter);
 app.listen(port, async function () {
   try {
     await setupMongoDb(mongoUrl);
-    console.log("connection to database successful");
+    console.info("connection to database successful");
   } catch (err) {
-    console.log("could not connect to database");
+    console.info("could not connect to database");
   }
-  console.log(`App is listening on port ${port}!`);
+  console.info(`App is listening on port ${port}!`);
 });

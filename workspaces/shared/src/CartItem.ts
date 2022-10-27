@@ -1,12 +1,16 @@
+import { ProductItem } from "./ProductItem"
+
+export type CartProduct = {
+    productId: string,
+    quantity: string
+}
+
 export interface CartItem {
     _id?: string,
-    user: string,
-    product: string,
-    description: string,
-    category: string,
-    weight: string,
-    price: string,
-    manufacturer: string,
-    images: string[]
-    paid?: boolean
+    userId: string,
+    products: Partial<CartProduct[] & ProductItem[]>[]
+    createdAt?: Date
+    updatedAt?: Date
+
+
 }

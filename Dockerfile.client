@@ -1,4 +1,5 @@
-FROM node:16-alpine
+
+FROM node:16-alpine 
 
 WORKDIR /usr/src/app
 
@@ -16,6 +17,7 @@ ENV REACT_APP_SERVER_URL=${APP_WEBSHOP_API}
 
 RUN npm run build -w workspaces/client
 
+
 EXPOSE 3000
 
-CMD [ "npx", "serve", "workspaces/client/build" ]
+CMD [ "npx", "serve", "-s", "workspaces/client/build" ]
