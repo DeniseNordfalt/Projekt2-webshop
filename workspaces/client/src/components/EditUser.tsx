@@ -76,7 +76,7 @@ export default function EditUser({}: Props) {
       roles,
       adressData
     );
-     await newToken()
+    await newToken();
     window.location.reload();
   };
 
@@ -166,10 +166,7 @@ export default function EditUser({}: Props) {
           required
         />
 
-        <label htmlFor="admin">
-          Make admin for dev purposes (this will trigger logout to set new jwt
-          token)
-        </label>
+        <label htmlFor="admin">Make admin/customer for dev purposes</label>
 
         <input
           type="checkbox"
