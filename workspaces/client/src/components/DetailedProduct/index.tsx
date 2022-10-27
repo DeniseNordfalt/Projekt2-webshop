@@ -40,10 +40,10 @@ const DetailedProduct = (props: Props) => {
     addToCart(productId, 1);
   };
 
-  const performProductEdit = (
+  const performProductEdit = async (
     target: any,
     updateProduct: ProductItem | Partial<ProductItem> | null
-  ): void => {
+  ): Promise<void> => {
     const files = target[5].files;
     const formData = new FormData();
     formData.append("name", updateProduct?.name || "");
@@ -57,7 +57,7 @@ const DetailedProduct = (props: Props) => {
         formData.append("files", files[key]);
       }
     }
-    editProduct(updateProduct?._id || "0", formData);
+    await editProduct(updateProduct?._id || "0", formData);
     setIsModalVisible(false);
     window.location.reload();
   };

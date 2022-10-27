@@ -29,7 +29,7 @@ export const findOrder = async (id: string): Promise<OrderItem> => {
 };
 
 export const findAllOrders = async (): Promise<OrderItem[]> => {
-  return (await Order.find({}).exec()) as unknown as OrderItem[];
+  return (await Order.find({}).sort({ createdAt: -1 }).exec()) as unknown as OrderItem[];
 };
 
 export const findOrderById = async (id: string): Promise<OrderItem> => {
@@ -39,7 +39,7 @@ export const findOrderById = async (id: string): Promise<OrderItem> => {
 export const findOrdersByUser = async (
   userId: string
 ): Promise<OrderItem[]> => {
-  return (await Order.find({ userId }).exec()) as unknown as OrderItem[];
+  return (await Order.find({ userId }).sort({ createdAt: -1 }).exec()) as unknown as OrderItem[];
 };
 
 export const updateOrder = async (

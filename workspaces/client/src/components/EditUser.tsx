@@ -167,8 +167,7 @@ export default function EditUser({}: Props) {
         />
 
         <label htmlFor="admin">
-          Make admin for dev purposes (this will trigger logout to set new jwt
-          token)
+          Make admin for dev purposes 
         </label>
 
         <input
