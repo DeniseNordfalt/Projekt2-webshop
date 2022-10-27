@@ -49,7 +49,6 @@ type Props = {};
 
 export default function EditUser({}: Props) {
   const { user } = useContext(UserContext);
-  console.log("user", user);
 
   const [formData, setFormData] = useState({
     name: user?.name as string,
@@ -65,6 +64,8 @@ export default function EditUser({}: Props) {
     postalCode: user?.deliveryAddress?.postalCode as number,
   });
 
+  const [roles, setRoles] = useState(user?.roles as string[]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -72,7 +73,7 @@ export default function EditUser({}: Props) {
       formData.name,
       formData.email,
       formData.phoneNumber,
-      formData.roles,
+      roles,
       adressData
     );
      await newToken()
@@ -165,16 +166,24 @@ export default function EditUser({}: Props) {
           required
         />
 
-        <label htmlFor="admin">Make admin for dev purposes</label>
+        <label htmlFor="admin">
+          Make admin for dev purposes (this will trigger logout to set new jwt
+          token)
+        </label>
+
         <input
           type="checkbox"
-          name="admin"
-          id="admin"
-          value={formData.roles}
+          name="roles"
+          id="roles"
+          value={roles}
           onChange={(e) => {
-            setFormData({ ...formData, roles: ["admin"] });
+            if (e.target.checked) {
+              setRoles(["customer", "admin"]);
+            } else {
+              setRoles(["customer"]);
+            }
           }}
-          checked={formData.roles.includes("admin") === true}
+          checked={roles.includes("admin")}
         />
 
         <StyledButton type="submit">Update</StyledButton>

@@ -25,13 +25,6 @@ userSchema.pre(/save/, async function (next): Promise<void> {
   next();
 });
 
-// userSchema.statics.login = async function (username: string, password: string): Promise<UserItem>{
-//   const user = await this.findOne({ username });
-//   return user && password && (await bcrypt.compare(password, user.password))
-//     ? user
-//     : null;
-// };
-
 const User = mongoose.model<UserItem>("User", userSchema);
 
 export const handleNewUser = async (user: UserItem): Promise<UserItem> => {
