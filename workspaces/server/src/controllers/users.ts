@@ -23,9 +23,9 @@ export const getUser = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const id = req?.user?.userId;
   if (id) {
     const user = await findUserById(id);
-    res.json(user);
+    res.status(200).json(user);
   } else {
-    res.json({ error: "User not found" });
+    res.status(401).json({ error: "User not found" });
   }
 };
 
