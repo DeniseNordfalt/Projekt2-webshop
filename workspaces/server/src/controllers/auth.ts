@@ -33,7 +33,7 @@ export const logInUser = async (req: Request, res: Response) => {
 
 export const newToken = async (req: JwtRequest<TokenPayload>, res: Response) => {
   const user = await findUserById(req.user?.userId as string)
-  console.log(user)
+
   try {
     const token = jwt.sign(
       { userId: user?._id, email: user?.email, roles: user?.roles },
